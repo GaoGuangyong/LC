@@ -8,24 +8,23 @@
 // 最后要返回 b，因为在循环的最后一轮，c 的值最终被赋给了 b
 class Solution {
 public:
-    int mod = 1e9 + 7;
-    
     int fib(int n) {
-        // 第 1 个数 单独特判     
-        if (n == 0) return 0;
+        int mod = 1e9 + 7;
+
+        // 特判 F(0)
+        if (n == 0) return 0; // 因为最后返回的是 b，因此必须特判
 
         // 初始化 前 2 个数
         int a = 0;
         int b = 1;
 
-        // 循环 n - 1 次
-        for (int i = 2; i <= n; i ++ ) {
+        // 循环 n - 1 次 -> 返回 b
+        while ( -- n) {
             int c = (a + b) % mod;
             a = b;
             b = c;
         }
 
-        // 返回 b
         return b;
     }
 };
@@ -35,32 +34,31 @@ public:
 // 最后要返回 a，因为在循环的最后一轮，b 的值最终被赋给了 a
 class Solution {
 public:
-    int mod = 1e9 + 7;
-
     int fib(int n) {
+        int mod = 1e9 + 7;
+
         // 初始化 前 2 个数
         int a = 0;
         int b = 1;
 
-        // 循环 n 次
+        // 循环 n 次 -> 返回 a
         while (n -- ) {
             int c = (a + b) % mod;
             a = b;
             b = c;
         }
 
-        // 返回 a
         return a;
     }
 };
 
 
-// 递推
+// 递推写法
 class Solution {
 public:
-    int mod = 1e9 + 7;
-
     int fib(int n) {
+        int mod = 1e9 + 7;
+
         // 第 1 个数 单独特判
         if (n == 0) return 0;
         

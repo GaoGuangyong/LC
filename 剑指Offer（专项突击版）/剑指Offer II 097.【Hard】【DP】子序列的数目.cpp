@@ -4,7 +4,7 @@
 // 第一维表示第一个字符串的最后一个字符，第二维表示第二个字符串的最后一个字符
 
 // 状态表示：
-// f[i][j] 表示 s[1 ~ i] 中所有和 t[1 ~ j] 相等的子序列的个数（下标从 1 开始）
+// f[i][j] 表示 s[1 ~ i] 中所有和 t[1 ~ j] 相等的子序列的个数（下标从 1 开始），则答案为 f[m][n]
 
 // 初始化：
 // t 为空时，也是一种合法方案，即方案数为 1
@@ -22,24 +22,24 @@ class Solution {
 public:
     int numDistinct(string s, string t) {
         // 获取字符串 s 和 t 的长度
-        int n = s.size();
-        int m = t.size();
+        int m = s.size();
+        int n = t.size();
 
         // 为了方便 DP，将 2 个字符串都向后移动一位
         s = ' ' + s;
         t = ' ' + t;
         
         // 定义状态数组
-        vector<vector<LL>> f(n + 1, vector<LL>(m + 1));
+        vector<vector<LL>> f(m + 1, vector<LL>(n + 1));
         
         // 初始化：t 为空时，在 s[1 ~ i] 中选空的字符串，这也是一种合法方案，即方案数为 1
-        for (int i = 0; i <= n; i ++ ) {
+        for (int i = 0; i <= m; i ++ ) {
             f[i][0] = 1;
         }
         
         // 状态转移：
-        for (int i = 1; i <= n; i ++ ) {
-            for (int j = 1; j <= m; j ++ ) {
+        for (int i = 1; i <= m; i ++ ) {
+            for (int j = 1; j <= n; j ++ ) {
                 // 不选 s[i]
                 f[i][j] = f[i - 1][j];
                 // 选 s[i]
@@ -48,9 +48,10 @@ public:
             }
         }
 
-        return f[n][m];
+        return f[m][n];
     }
 };
+
 
 
 // 无注释版本

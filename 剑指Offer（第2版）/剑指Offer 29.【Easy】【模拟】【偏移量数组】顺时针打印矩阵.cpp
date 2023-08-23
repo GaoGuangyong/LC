@@ -44,7 +44,7 @@ public:
             int a = x + dx[d];
             int b = y + dy[d];
 
-            // 若下一个位置 (a, b) 越界或已经访问过，则换下一个方向
+            // ！！！！！核心代码：若下一个位置 (a, b) 越界或已经访问过，则换下一个方向
             if (a < 0 || a >= m || b < 0 || b >= n || visit[a][b] == true) {
                 d = (d + 1) % 4; // 注意这种写法：(使 d 在 0 -> 1 -> 2 -> 3 -> 0 间循环)
                 a = x + dx[d];
@@ -68,20 +68,20 @@ public:
         vector<int> res;
 
         if (matrix.empty() || matrix[0].empty()) return {};
+        
         int m = matrix.size();
         int n = matrix[0].size();
 
         int dx[4] = {0, 1, 0, -1};
         int dy[4] = {1, 0, -1, 0};
 
-        vector<vector<bool>> visit(m, vector<bool>(n)); 
+        vector<vector<bool>> visit(m, vector<bool>(n));
 
-        int x = 0, y = 0; 
-
-        int d = 0; 
+        int d = 0;
+        int x = 0, y = 0;
 
         for (int i = 0; i < m * n; i ++ ) {
-            res.push_back(matrix[x][y]); 
+            res.push_back(matrix[x][y]);
             visit[x][y] = true;
 
             int a = x + dx[d];
@@ -92,13 +92,12 @@ public:
                 a = x + dx[d];
                 b = y + dy[d];
             }
-            
+
             x = a;
             y = b;
         }
-        
+
         return res;
     }
 };
-
 

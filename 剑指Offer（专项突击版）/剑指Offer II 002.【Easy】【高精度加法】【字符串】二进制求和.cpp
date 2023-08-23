@@ -74,7 +74,7 @@ public:
         int t = 0;
 
         for (int i = 0; i < a.size() || i < b.size() || t != 0; i ++ ) {
-            if (i < a.size()) t += a[i] - '0';
+            if (i < a.size()) t += a[i] - '0'; // 将 char 类型的数字转换成 int 型
             if (i < b.size()) t += b[i] - '0';
             c += to_string(t % 2);
             t /= 2;

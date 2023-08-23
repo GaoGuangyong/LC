@@ -10,9 +10,6 @@
 // 实际上 BFS 的时候不需要真的建立超级起点，仍旧是和单源最短路 BFS 问题一样，最开始把所有起点（0）都加入到队列
 // 相当于超级起点到所有起点的距离设置为 0，最后也不需要去减 1 了
 
-
-typedef pair<int, int> PII;
-
 class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
@@ -26,7 +23,7 @@ public:
         // 最短路问题，必用距离数组 dist，dist[i][j] 表示 (i, j) 距离起点的距离
         vector<vector<int>> dist(m, vector<int>(n, -1)); // 距离初始化为非法值即可，如 -1
 
-        queue<PII> q; // BFS 队列，每个点都是一组数对 <i, j>，表示 mat[i][j] 的坐标
+        queue<pair<int, int>> q; // BFS 队列，每个点都是一组数对 <i, j>，表示 mat[i][j] 的坐标
 
         // 先将所有的起点（0）的坐标插入队列
         for (int i = 0; i < m; i ++ ) {
@@ -40,23 +37,26 @@ public:
 
         // BFS 过程（按层遍历）
         while (q.size()) { // 只要队列不空，就不断将节点入队
-            auto t = q.front(); // 获取队头（ t 对应的坐标为 {t.first, t.second} ）
-            q.pop(); // 队头出队
+            int len = q.size();
+            while (len -- ) {
+                auto t = q.front(); // 获取队头（ t 对应的坐标为 {t.first, t.second} ）
+                q.pop(); // 队头出队
 
-            // 当前位置坐标 (x, y)
-            int x = t.first;
-            int y = t.second;
+                // 当前位置坐标 (x, y)
+                int x = t.first;
+                int y = t.second;
 
-            // 新遍历的位置坐标 (a, b)
-            for (int i = 0; i < 4; i ++ ) {
-                int a = x + dx[i];
-                int b = y + dy[i];
-                // 如果新遍历的位置坐标 (a, b) 未越界 && 未被遍历过
-                if (a >= 0 && a < m && b >= 0 && b < n && dist[a][b] == -1) {
-                    // 则更新 (a, b) 距离起点的距离：在 t 的基础上 + 1（因为每条边的权值都为 1）
-                    dist[a][b] = dist[x][y] + 1; 
-                    // 将新搜索到的节点入队
-                    q.push({a, b}); 
+                // 新遍历的位置坐标 (a, b)
+                for (int i = 0; i < 4; i ++ ) {
+                    int a = x + dx[i];
+                    int b = y + dy[i];
+                    // 如果新遍历的位置坐标 (a, b) 未越界 && 未被遍历过
+                    if (a >= 0 && a < m && b >= 0 && b < n && dist[a][b] == -1) {
+                        // 则更新 (a, b) 距离起点的距离：在 t 的基础上 + 1（因为每条边的权值都为 1）
+                        dist[a][b] = dist[x][y] + 1; 
+                        // 将新搜索到的节点入队
+                        q.push({a, b}); 
+                    }
                 }
             }
         }
@@ -65,8 +65,7 @@ public:
 };
 
 
-// 无注释版本
-typedef pair<int, int> PII;
+// 二刷
 
 class Solution {
 public:
@@ -79,7 +78,7 @@ public:
 
         vector<vector<int>> dist(m, vector<int>(n, -1));
 
-        queue<PII> q;
+        queue<pair<int, int>> q;
 
         for (int i = 0; i < m; i ++ ) {
             for (int j = 0; j < n; j ++ ) {
@@ -91,22 +90,24 @@ public:
         }
 
         while (q.size()) {
-            auto t = q.front();
-            q.pop();
+            int len = q.size(); // 模板
+            while (len -- ) {   // 模板
+                auto t = q.front();
+                q.pop();
 
-            int x = t.first;
-            int y = t.second;
+                int x = t.first;
+                int y = t.second;
 
-            for (int i = 0; i < 4; i ++ ) {
-                int a = x + dx[i];
-                int b = y + dy[i];
-                if (a >= 0 && a < m && b >= 0 && b < n && dist[a][b] == -1) {
-                    dist[a][b] = dist[x][y] + 1; 
-                    q.push({a, b}); 
+                for (int i = 0; i < 4; i ++ ) {
+                    int a = x + dx[i];
+                    int b = y + dy[i];
+                    if (a >= 0 && a < m && b >= 0 && b < n && dist[a][b] == -1) {
+                        dist[a][b] = dist[x][y] + 1; 
+                        q.push({a, b}); 
+                    }
                 }
             }
         }
         return dist;
     }
 };
-

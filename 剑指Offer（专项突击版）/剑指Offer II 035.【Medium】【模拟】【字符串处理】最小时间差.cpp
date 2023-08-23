@@ -61,3 +61,31 @@ public:
         return res;
     }
 };
+
+
+// 二刷
+class Solution {
+public:
+    int findMinDifference(vector<string>& timePoints) {
+        int res = INT_MAX;
+
+        vector<int> times;
+        for (string timePoint: timePoints) {
+            int minute = stoi(timePoint.substr(0, 2)) * 60 + stoi(timePoint.substr(3, 2));
+            times.push_back(minute);
+        }
+
+        sort(times.begin(), times.end());
+
+        for (int i = 1; i < times.size(); i ++ ) {
+            res = min(res, times[i] - times[i - 1]);
+        }
+
+        int last = (24 * 60 - times[times.size() - 1]) + times[0];
+
+        res = min(res, last);
+
+        return res; 
+    }
+};
+

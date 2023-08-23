@@ -16,11 +16,11 @@
 class Solution {
 public:
     bool isInterleave(string s1, string s2, string s3) {
-        int n = s1.size(); // 字符串 1 的长度
-        int m = s2.size(); // 字符串 2 的长度
+        int m = s1.size(); // 字符串 1 的长度
+        int n = s2.size(); // 字符串 2 的长度
 
         // 特判：如果 s1 和 s2 的长度相加不等于 s3 的长度，则必定不可能组成
-        if (s3.size() != n + m) return false; 
+        if (s3.size() != m + n) return false; 
 
         // 为了方便 DP，将 3 个字符串都向后移动一位
         s1 = ' ' + s1; 
@@ -28,19 +28,20 @@ public:
         s3 = ' ' + s3;
 
         // 定义状态数组
-        vector<vector<bool>> f(n + 1, vector<bool>(m + 1)); 
+        vector<vector<bool>> f(m + 1, vector<bool>(n + 1)); 
 
         // 初始化：
         f[0][0] = true; // 空串和空串可以拼成空串
 
         // 注意：此题存在空串 与 长度为 1 的串 交错的情况，所以 i, j 都要从 0 开始
-        for (int i = 0; i <= n; i ++ ) {
-            for (int j = 0; j <= m; j ++ ) {
+        for (int i = 0; i <= m; i ++ ) {
+            for (int j = 0; j <= n; j ++ ) {
                 if (i > 0 && s1[i] == s3[i + j]) f[i][j] = f[i - 1][j];
                 if (j > 0 && s2[j] == s3[i + j]) f[i][j] = f[i][j] || f[i][j - 1];
             }
         }
-        return f[n][m];
+        
+        return f[m][n];
     }
 };
 

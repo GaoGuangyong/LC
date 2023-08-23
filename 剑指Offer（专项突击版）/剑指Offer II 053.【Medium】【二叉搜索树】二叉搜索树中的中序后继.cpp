@@ -16,70 +16,81 @@
 class Solution {
 public:
     TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
-        TreeNode* successor = nullptr; // 定义后继指针，初始化为空指针，最终返回这个指针
+        TreeNode* res = nullptr; // 定义后继指针，初始化为空指针，最终返回这个指针
 
         //【1】如果 p 节点有右儿子，则从 p 节点右儿子开始一路向左，最左边的那个节点就是 p 节点的后继
         if (p->right != nullptr) {
-            successor = p->right; // 先将后继指针指向 p 的右儿子
-            while (successor->left != nullptr) { // 当 p 的右儿子有左儿子，就一路向左
-                successor = successor->left;
+            res = p->right; // 先将后继指针指向 p 的右儿子
+            while (res->left != nullptr) { // 当 p 的右儿子有左儿子，就一路向左
+                res = res->left;
             } 
-            return successor;
+            return res;
         }
 
-        //【2】如果节点 p 没有右儿子，则需要从根节点开始遍历寻找节点 p 的父节点
-        TreeNode* node = root; // 用 node 表示遍历到的节点，初始时 node = root
-
-        // 只要没变量到空节点，就循环遍历
-        while (node != nullptr) {
-            // 如果 node > p，则 p 的后继节点可能是 node 或者在 node 的左子树中
-            if (node->val > p->val) {
-                successor = node; // node 可能是后继节点
-                node = node->left; // 将 node 移动到其左子节点继续遍历
+        //【2】如果节点 p 没有右儿子，则它的后继节点就是第一个 > p 的祖先节点
+        // 从根节点开始遍历二叉搜索树，寻找节点 p 的祖先节点，直到节点为 空 或找到了祖先节点
+        while (root != nullptr) {
+            // 如果 root > p，则 p 的后继节点可能是 root 或者在 root 的左子树中
+            if (root->val > p->val) {
+                res = root; // root 可能是后继节点
+                root = root->left; // 将 root 移动到其左子节点继续遍历
             }
-            // 如果 node < p 的节点值，则 p 的后继节点可能在 node 的右子树中
-            else if (node->val < p->val) {
-                node = node->right; // 将 node 移动到其右子节点继续遍历
+            // 否则，p 的后继节点可能在 root 的右子树中
+            else {
+                root = root->right; // 将 root 移动到其右子节点继续遍历
             }
-            // 如果 node == p，则此时，successor 指向的就是 p 的父节点，也就是其后继
-            else break;
-        } // 循环结束后，successor 指向的就是 p 的后继
+        } // 循环结束后，res 指向的就是 p 的后继
 
-        return successor;
+        return res;
     }
 };
 
 
-
-// 无注释版本
+// 写法二（推荐）
 class Solution {
 public:
     TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
-        TreeNode* successor = nullptr;
+        // 初始化结果节点为 空
+        TreeNode* res = nullptr;
 
-        if (p->right != nullptr) {
-            successor = p->right;
-            while (successor->left != nullptr) {
-                successor = successor->left;
+        // 遍历二叉搜索树，直到节点为 空 或找到了目标节点的位置
+        while (root != nullptr) {
+            // 目标节点在当前节点的左子树中
+            if (root->val > p->val) {  
+                res = root; // 记录当前节点为可能的后继节点
+                root = root->left; // 继续在左子树中查找目标节点的后继节点
             } 
-            return successor;
+            // 目标节点在当前节点的右子树中
+            else {  
+                // 不记录当前节点，因为当前节点不是目标节点的后继节点
+                // 目标节点的后继节点一定在右子树中，所以直接继续在右子树中查找
+                root = root->right;
+            }
         }
-
-        TreeNode* node = root;
-
-        while (node != nullptr) {
-            if (node->val > p->val) {
-                successor = node; 
-                node = node->left;
-            }
-            else if (node->val < p->val) {
-                node = node->right; 
-            }
-            else if (node->val == p->val) break;
-        } 
-
-        return successor;
+        // 返回可能的后继节点
+        return res;
     }
 };
 
+
+// 无注释版本
+
+class Solution {
+public:
+    TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
+        TreeNode* res = nullptr;
+
+        while (root != nullptr) {
+            if (root->val > p->val) {
+                res = root;
+                root = root->left;
+            }
+            else {
+                root = root->right; 
+            }
+        }
+
+        return res;
+    }
+};
 

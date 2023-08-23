@@ -26,13 +26,11 @@ public:
         if (root == nullptr) return;
 
         // 更新最大层数
-        maxd = max(maxd, d); 
+        maxd = max(maxd, d);
 
         // 更新 d 层的最大值
-        // 如果哈希表中找不到 d，则当前节点 root 是 d 层的第一个节点，将 d 层的最大值初始化为当前节点的值
-        if (!hash.count(d)) hash[d] = root->val;
-        // 否则，该层已有节点，更新该层的最大值
-        else hash[d] = max(hash[d], root->val);
+        if (!hash.count(d)) hash[d] = root->val; // 如果哈希表中找不到 d，则当前节点 root 是 d 层的第一个节点，将 d 层的最大值初始化为当前节点的值
+        else hash[d] = max(hash[d], root->val); // 否则，该层已有节点，更新该层的最大值
 
         dfs(root->left, d + 1); // 递归遍历左子树
         dfs(root->right, d + 1); // 递归遍历右子树
@@ -84,4 +82,29 @@ public:
 };
 
 
+// 二刷
+class Solution {
+public:
+    unordered_map<int, int> hash;
+    int maxd = -1;
 
+    void dfs(TreeNode* root, int d) {
+        if (root == nullptr) return;
+
+        maxd = max(maxd, d);
+
+        if (!hash.count(d)) hash[d] = root->val;
+        else hash[d] = max(hash[d], root->val);
+
+        dfs(root->left, d + 1);
+        dfs(root->right, d + 1);
+    }
+
+    vector<int> largestValues(TreeNode* root) {
+        dfs(root, 1);
+
+        vector<int> res;
+        for (int i = 1; i <= maxd; i ++ ) res.push_back(hash[i]);
+        return res;
+    }
+};

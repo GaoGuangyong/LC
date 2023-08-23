@@ -26,7 +26,7 @@ public:
         // 枚举 nums 数组，设 nums[i] 为三个数中的第一个数
         for (int i = 0; i < n; i ++ ) {
             // 减枝：若枚举到了重复的数，则跳过
-            if (i >= 1 && nums[i] == nums[i - 1]) continue;
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
 
             // 否则，从 i + 1 和 n - 1 开始向中间搜索（相当于两数之和）
             int l = i + 1;
@@ -83,3 +83,35 @@ public:
         return res;
     }
 };
+
+
+// 二刷
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> res;
+        sort(nums.begin(), nums.end());
+
+        for (int i = 0; i < nums.size(); i ++ ) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            
+            int l = i + 1;
+            int r = nums.size() - 1;
+
+            while (l < r) {
+                int sum = nums[i] + nums[l] + nums[r];
+                if (sum == 0) {
+                    res.push_back({nums[i], nums[l], nums[r]});
+                    do l ++ ; while (l < r && nums[l] == nums[l - 1]);
+                    do r -- ; while (l < r && nums[r] == nums[r + 1]);
+                } 
+                else if (sum < 0) l ++ ;
+                else if (sum > 0) r -- ;
+            }
+        }
+
+        return res;
+    }
+};
+
+

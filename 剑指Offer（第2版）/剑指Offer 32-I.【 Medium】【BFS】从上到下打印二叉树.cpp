@@ -17,11 +17,15 @@
 
 
 // BFS
+
 class Solution {
 public:
+    // 将二叉树按层序遍历的顺序输出，输出为 1 个数组
     vector<int> levelOrder(TreeNode* root) {
         vector<int> res; // 结果数组
-        if (root == nullptr) return {}; // 如果是空树，则什么都不做，直接返回空数组
+        
+        // 特判：如果是空树，则返回空数组
+        if (root == nullptr) return {};
         
         queue<TreeNode*> q; // BFS 队列
         q.push(root); // 根节点入队
@@ -33,10 +37,11 @@ public:
 
             res.push_back(t->val); // 将队头节点加入结果数组
 
-            // 如果队头节点有左右孩子的话，将左右孩子也入队，稍后处理
+            // 如果队头节点有左右孩子的话，则将左右孩子也入队
             if (t->left != nullptr) q.push(t->left);
             if (t->right != nullptr) q.push(t->right);
         }
+        
         return res;
     }
 };

@@ -1,7 +1,9 @@
-// 双指针
+
+
+// 双指针（参考二刷代码）
 class Solution {
 public:
-    // 自定义 check 函数，判断字符 c 是不是大小写字母或数字
+    // 辅助函数：判断字符 c 是不是大小写字母或数字
     bool check(char c) {
         if (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9') return true;
         else return false;
@@ -41,3 +43,31 @@ public:
     }
 };
 
+// 二刷（推荐）
+class Solution {
+public:
+    bool check(char c) {
+        return isdigit(c) || isalpha(c);
+    }
+
+    bool isPalindrome(string s) {
+        int l = 0;
+        int r = s.size() - 1;
+
+        while (l < r) {
+            if (check(s[l]) == false) {
+                l ++ ;
+                continue;
+            }
+            if (check(s[r]) == false) {
+                r -- ;
+                continue;
+            } 
+            if (tolower(s[l]) != tolower(s[r])) return false;
+            l ++ ;
+            r -- ;
+        }
+
+        return true;
+    }
+};

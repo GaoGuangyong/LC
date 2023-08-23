@@ -17,8 +17,8 @@ public:
     void dfs(ListNode* head) {
         // 递归出口：如果遍历到空节点，则结束遍历，返回
         if (head == nullptr) return;
-        // 递归遍历下一个节点，相当于当前节点压栈
-        dfs(head->next); 
+        
+        dfs(head->next); // 递归遍历下一个节点，相当于当前节点压栈
         res.push_back(head->val); // 当所有节点都压栈后，从栈顶开始一个一个加入数组尾部
     }
 
@@ -33,17 +33,14 @@ public:
 class Solution {
 public:
     vector<int> reversePrint(ListNode* head) {
-        // 辅助栈
-        stack<int> stk;
+        
+        stack<int> stk; // 辅助栈
 
         // 遍历单链表，将所有节点入栈
-        ListNode* p = head;
-        while (p != nullptr) {
+        for (ListNode* p = head; p != nullptr; p = p->next) {
             stk.push(p->val);
-            p = p->next;
         }
 
-        // 创建结果数组，将辅助栈中的元素弹出，加入结果数组
         vector<int> res;
 
         while (stk.size()) {

@@ -13,8 +13,7 @@ public:
             if (s == sum - s - nums[i]) {
                 return i;
             }
-            // 把当前元素加到 s 上，继续下一轮枚举
-            s += nums[i]; 
+            s += nums[i]; // 把当前元素加到 s 上，继续下一轮枚举
         }
 
         // 如果无解，返回 - 1

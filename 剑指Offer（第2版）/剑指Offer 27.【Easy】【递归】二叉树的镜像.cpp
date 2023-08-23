@@ -15,9 +15,9 @@
 
 class Solution {
 public:
-    // 递归函数：给定二叉树 root，返回其镜像二叉树
+    // 给定二叉树 root，返回其镜像二叉树
     TreeNode* mirrorTree(TreeNode* root) {
-        // 递归出口：如果遍历到了空节点，则返回空节点
+        // 递归出口：如果遍历到了空树，则遍历结束，返回空树的镜像二叉树：空树
         if (root == nullptr) return nullptr;
 
         // 交换指向左右儿子的指针
@@ -27,8 +27,7 @@ public:
         mirrorTree(root->left);
         mirrorTree(root->right);
 
-        // 最后返回根节点，因为镜像之后根节点并没有变
-        return root;
+        return root; // 最后返回根节点，因为镜像之后根节点并没有变
     }
 };
 

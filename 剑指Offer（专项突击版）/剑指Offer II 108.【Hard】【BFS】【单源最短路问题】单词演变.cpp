@@ -28,16 +28,13 @@ public:
             // 枚举当前单词 t 的每一位 i
             for (int i = 0; i < t.size(); i ++ ) {
                 string word = t; // 由于每次循环都会修改原单词，所以先保存原单词
-                // 枚举单词的 i 位的所有可能字母 j
+                // 枚举当前单词 word 的 i 位的所有可能字母 j
                 for (char j = 'a'; j <= 'z'; j ++ ) {
-                    word[i] = j; // 把单词的 i 位换成 j
-                    // 如果当前位换成 j 后的单词在哈希集合中存在（说明该单词在 worldList 中存在，可以转化成这个单词）
-                    // 且在哈希表中不存在（说明该单词还没被转换过，到起点单词的距离也就没计算过）
+                    word[i] = j; // 把当前单词 word 的 i 位换成 j
+                    // 如果当前位换成 j 后的单词在哈希集合中存在（说明在字典中存在，可以转换），且在哈希表中不存在（说明该单词还没被转换过，到起点单词的距离也就没计算过）,则是一个合法的单词
                     if (S.count(word) && !dist.count(word)) {
-                        // 更新当前转换后的单词 word 到起点单词的距离：在 t 的基础上 +1
-                        dist[word] = dist[t] + 1; 
-                        // 如果当前已经转换到了终点单词，则输出答案
-                        if (word == endWord) { 
+                        dist[word] = dist[t] + 1; // 更新当前转换后的单词 word 到起点单词的距离：在 t 的基础上 +1
+                        if (word == endWord) { // 如果当前已经转换到了终点单词，则输出答案
                             return dist[word] + 1; // 因为求得是单词个数，所以是边数 + 1
                         }
                         q.push(word); // 将新搜到的单词入队
@@ -51,42 +48,37 @@ public:
 };
 
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
-        unordered_set<string> S; 
-        for (auto word: wordList) S.insert(word);
-        
-        unordered_map<string, int> dist; 
+        unordered_set<string> S;
+        for (string s: wordList) S.insert(s);
+
+        unordered_map<string, int> dist;
         dist[beginWord] = 0;
 
-        queue<string> q; 
+        queue<string> q;
         q.push(beginWord);
 
-        // BFS 过程
-        while (q.size()) { 
+        while (q.size()) {
             auto t = q.front();
             q.pop();
 
             for (int i = 0; i < t.size(); i ++ ) {
                 string word = t;
-
+                
                 for (char j = 'a'; j <= 'z'; j ++ ) {
                     word[i] = j;
                     if (S.count(word) && !dist.count(word)) {
-                        dist[word] = dist[t] + 1; 
-                        if (word == endWord) { 
-                            return dist[word] + 1; 
-                        }
-                        q.push(word); 
+                        dist[word] = dist[t] + 1;
+                        if (word == endWord) return dist[word] + 1;
+                        q.push(word);
                     }
                 }
             }
         }
 
-        return 0; 
+        return 0;
     }
 };
-
-

@@ -4,26 +4,24 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
-        string res;
-        
         unordered_map<char, int> hash_t; // 字符串 t 中的字母及其个数
-        unordered_map<char, int> hash_w; // 滑动窗口中的字母及其个数
-        
         for (char c: t) hash_t[c] ++ ;
-        
+
+        unordered_map<char, int> hash; // 滑动窗口中的字母及其个数
         int cnt = 0; // cnt 表示当前滑动窗口内有效字母（即在字符串 t 中存在的字母）的个数
+        string res;
 
         // 在字符串 s 中维护一个滑动窗口
         for (int i = 0, j = 0; i < s.size(); i ++ ) {
             // 将字母 s[i] 加入滑动窗口
-            hash_w[s[i]] ++ ; 
+            hash[s[i]] ++ ;
             // 如果字母 s[i] 加入滑动窗口后，滑动窗口中字母 s[i] 的个数仍然 <= 字符串 t 中字母 s[i] 的个数，则对应有效字母个数 + 1
-            if (hash_w[s[i]] <= hash_t[s[i]]) cnt ++ ;
+            if (hash[s[i]] <= hash_t[s[i]]) cnt ++ ;
 
             // 当滑动窗口中字母 s[j] 的个数超过了字符串 t 中字母 s[j] 的个数
             // 则将 j 指针不断右移，直到滑动窗口中字母 s[j] 的个数 <= 字符串 t 中字母 s[j]
-            while (hash_w[s[j]] > hash_t[s[j]]) {
-                hash_w[s[j]] -- ;
+            while (hash[s[j]] > hash_t[s[j]]) {
+                hash[s[j]] -- ;
                 j ++ ;
             }
 
@@ -47,18 +45,18 @@ public:
         string res;
         
         unordered_map<char, int> hash_t;
-        unordered_map<char, int> hash_w;
+        unordered_map<char, int> hash;
         
         for (char c: t) hash_t[c] ++ ;
         
         int cnt = 0;
 
         for (int i = 0, j = 0; i < s.size(); i ++ ) {
-            hash_w[s[i]] ++ ; 
-            if (hash_w[s[i]] <= hash_t[s[i]]) cnt ++ ;
+            hash[s[i]] ++ ; 
+            if (hash[s[i]] <= hash_t[s[i]]) cnt ++ ;
 
-            while (hash_w[s[j]] > hash_t[s[j]]) {
-                hash_w[s[j]] -- ;
+            while (hash[s[j]] > hash_t[s[j]]) {
+                hash[s[j]] -- ;
                 j ++ ;
             }
 

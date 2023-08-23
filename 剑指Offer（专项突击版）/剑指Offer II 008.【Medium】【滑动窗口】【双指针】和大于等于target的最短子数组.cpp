@@ -39,7 +39,7 @@ public:
 
         for (int i = 0, j = 0; i < nums.size(); i ++ ) {
             sum += nums[i];
-
+            
             while (j <= i && sum >= target) {
                 res = min(res, i - j + 1);
                 sum -= nums[j];
@@ -47,8 +47,7 @@ public:
             }
         }
 
-        if (res == INT_MAX) return 0;
-
+        if (res == INT_MAX) res = 0;
         return res;
     }
 };

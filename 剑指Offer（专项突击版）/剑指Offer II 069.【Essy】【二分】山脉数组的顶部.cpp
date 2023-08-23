@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 // 二分
 
 // 山顶数组的性质：
@@ -13,8 +15,8 @@ public:
         
         while (l < r) {
             int mid = l + r + 1 >> 1;
-            // 如果当前数字 > 前一个数，说明山顶数在当前数字右边，或者就是当前数字
-            if (arr[mid] > arr[mid - 1]) 
+            
+            if (arr[mid] > arr[mid - 1]) // 如果当前数字 > 前一个数，说明山顶数在当前数字右边，或者就是当前数字
                 l = mid;
             else 
                 r = mid - 1;
@@ -24,3 +26,12 @@ public:
     }
 };
 
+
+// 写法二：库函数
+class Solution {
+public:
+    int peakIndexInMountainArray(vector<int>& arr) {
+        auto it = max_element(arr.begin(), arr.end());
+        return it - arr.begin();
+    }
+};

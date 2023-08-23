@@ -4,7 +4,7 @@
 class Solution {
 public:
     bool isAlienSorted(vector<string>& words, string order) {
-        // 定义一个哈希表，存字符串 order 中每个字母及其下标
+        // 定义一个哈希表，存字母表中的字母及其下标
         unordered_map<char, int> hash;
         for (int i = 0; i < order.size(); i ++ ) hash[order[i]] = i;
 
@@ -19,9 +19,9 @@ public:
             while (x < a.size() && y < b.size()) { 
                 // 如果是逆序，则返回 false  
                 if (hash[a[x]] > hash[b[y]]) return false;
-                // 如果是顺序，则退出当前循环，继续比较下一位
+                // 如果是顺序，则说明 a 和 b 的顺序正确，退出当前 while 循环，继续比较下两个单词
                 if (hash[a[x]] < hash[b[y]]) break;
-
+                // 若相等，则继续比较下一位
                 x ++ ;
                 y ++ ;
                 

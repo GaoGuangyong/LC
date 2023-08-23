@@ -1,10 +1,10 @@
 
 // DP
 // 状态表示：
-// f[i] 表示跳到第 i 个台阶的时候需要花费的体力，则答案为：f[n]
+// f[i] 表示跳到第 i 个台阶的时候需要花费的最费用，则答案为：f[n]
 
 // 初始化：
-// 初始时，可以从第 0 个台阶 或 第 1 个台阶开始爬，不需要花费体力
+// 初始时，可以从第 0 个台阶 或 第 1 个台阶开始爬，不需要花费费用
 // f[0] = 0
 // f[1] = 0
 
@@ -35,12 +35,12 @@ public:
 };
 
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
     int minCostClimbingStairs(vector<int>& cost) {
         int n = cost.size();
-        
+
         vector<int> f(n + 1);
 
         f[0] = 0;
@@ -48,7 +48,7 @@ public:
 
         for (int i = 2; i <= n; i ++ ) {
             f[i] = min(f[i - 1] + cost[i - 1], f[i - 2] + cost[i - 2]);
-        } 
+        }
 
         return f[n];
     }

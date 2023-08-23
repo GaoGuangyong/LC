@@ -11,28 +11,28 @@
 class Solution {
 public:
     bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t) {
-        set<long long> S; // INT_MAX - INT_MIN 会越界，所以定义成 long long
+        set<long long> S; // INT_MAX - INT_MIN 会爆 int，所以定义成 long long
 
         // 为了保证一定能找到，加入正无穷和负无穷作为哨兵，这样就不用单独判断边界
-        S.insert(1e10); // INT_MAX ≈ 2.1*10^9，因此 1e10 就够了
+        S.insert(1e10); // INT_MAX ≈ 2.1 * 10^9，因此 1e10 就够了
         S.insert(-1e10);
 
-        // 遍历数组，维护一个滑动窗口，满足：i - j <= k
+        // 遍历数组，维护一个滑动窗口 nums[j ~ i]，满足：i - j <= k
         for (int i = 0, j = 0; i < nums.size(); i ++ ) {
             // 如果当前窗口的大小超过了 k，那么就滑出去一个 nums[j]
-            if (i - j > k) {
-                // 注意：不能写 S.erase(nums[j])，因为这样会删除所有的 nums[j]，而我们只想删这一个，所以要删迭代器
-                S.erase(S.find(nums[j]));
+            while (i - j > k) {
+                S.erase(nums[j]); 
                 j ++ ;
             }
 
             int x = nums[i]; // 当前遍历的 nums[i]
 
-            auto it = S.lower_bound(x); // 求 >= x 的最小值（ it 是地址，*it 才是对应的值）
+            auto it = S.lower_bound(x); // 找到 >= x 的最小值的迭代器（it 是地址，*it 才是对应的值）
             // 如果 >= x 的最小值和 x 的差值满足 <= t，则找到了，返回 true
             if (*it - x <= t) return true; 
     
             it -- ; // 求 < x 的最大值
+
             // 如果 < x 的最大值和 x 的差值是满足 <= t，则找到了，返回 true
             if (x - *it <= t)  return true; 
                 
@@ -55,8 +55,8 @@ public:
         S.insert(-1e10);
 
         for (int i = 0, j = 0; i < nums.size(); i ++ ) {
-            if (i - j > k) {
-                S.erase(S.find(nums[j]));
+            while (i - j > k) {
+                S.erase(nums[j]);
                 j ++ ;
             }
 
@@ -64,7 +64,6 @@ public:
 
             auto it = S.lower_bound(x); 
             if (*it - x <= t) return true; 
-    
             it -- ;
             if (x - *it <= t)  return true; 
                 
@@ -74,5 +73,4 @@ public:
         return false;
     }
 };
-
 

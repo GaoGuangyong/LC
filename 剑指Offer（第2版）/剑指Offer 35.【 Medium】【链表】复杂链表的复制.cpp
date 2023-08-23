@@ -26,7 +26,7 @@ public:
     Node* copyRandomList(Node* head) {
         // I、遍历原链表，在每个节点 p 后面插入一个复制的节点 q，并将原链表和复制链表连在一起，得到新链表
         for (auto p = head; p != nullptr; p = p->next->next) {
-           auto q = new Node(p->val); // 新建节点 q，复制节点 p 的值
+            auto q = new Node(p->val); // 新建节点 q，复制节点 p 的值
             q->next = p->next;
             p->next = q;
         }

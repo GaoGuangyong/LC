@@ -1,8 +1,5 @@
 
 // 模拟
-
-
-
 class Solution {
 public:
     string replaceSpace(string s) {

@@ -73,14 +73,14 @@ return f[n][m];
 
 
 // 无注释版本
+
+// 写法一：
 class Solution {
 public:
     int INF = 1e5;
 
-    int coinChange(vector<int>& coins, int amount) {
+    int coinChange(vector<int>& coins, int m) {
         int n = coins.size();
-        int m = amount;
-
         vector<vector<int>> f(n + 1, vector<int>(m + 1, INF));
 
         for (int i = 0; i <= n; i ++ ) {
@@ -100,6 +100,33 @@ public:
         return f[n][m];
     }
 };
+
+// 写法二：
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        int n = coins.size();
+        int m = amount;
+
+        int INF = 1e5;
+        vector<vector<int>> f(n + 1, vector<int>(m + 1, INF));
+
+        for (int i = 0; i <= n; i ++ ) f[i][0] = 0;
+
+        for (int i = 1; i <= n; i ++ ) {
+            for (int j = 0; j <= m; j ++ ) {
+                if (j < coins[i - 1])
+                    f[i][j] = f[i - 1][j];
+                else
+                    f[i][j] = min(f[i - 1][j], f[i][j - coins[i - 1]] + 1);
+            }
+        } 
+
+        if (f[n][m] == INF) return -1;
+        return f[n][m];
+    }
+};
+
 
 
 
@@ -121,12 +148,14 @@ class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
         int INF = 1e9;
-        vector<int> f(amount + 1, INF); // 初始时赋一个特殊值用于特判（用 1e8 当作正无穷）
+        int m = amount;
+
+        vector<int> f(m + 1, INF); // 初始时赋一个特殊值用于特判（用 1e8 当作正无穷）
         // 定义容量初值
         f[0] = 0; // 初始时背包为空，容量为 0
         
         // 遍历背包（总金额）
-        for (int i = 1; i <= amount; i ++) { // 总金额 j 能由哪些硬币组成            
+        for (int i = 1; i <= m; i ++) { // 总金额 j 能由哪些硬币组成            
             // 遍历物品（硬币数量）
             for (int j = 0; j < coins.size(); j ++) { // 从 1 块钱遍历到 amount 块钱
                 if (i >= coins[j]) { // 只有当 总金额 j >= 当前硬币面值 coins[j]，才考虑将它加入
@@ -134,7 +163,8 @@ public:
                 }
             }
         }
-        if (f[amount] == INF) f[amount] = -1; // 如果 f[amount] 还是初值，则无解
-        return f[amount];
+        if (f[m] == INF) f[m] = -1; // 如果 f[m] 还是初值，则无解
+        return f[m];
     }
 };
+

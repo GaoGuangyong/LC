@@ -12,13 +12,10 @@ public:
         int n = nums.size();
         int res = 0;
 
-        unordered_map<int, int> hash;
-        hash[0] = 0; // s[0] = 0，下标初始化为 0 
-
         // 定义前缀和数组
         vector<int> s(n + 1);
 
-        // 初始化前缀和数组
+        // 初始化前缀和数组（注意 s 的下标和 nums 的下标不同）
         for (int i = 1; i <= n; i ++ ) {
             // 当前枚举的数是 nums[i - 1]，如果是 0，则先变成 -1
             if (nums[i - 1] == 0) nums[i - 1] = -1; 
@@ -26,14 +23,16 @@ public:
             s[i] = s[i - 1] + nums[i - 1];
         }
 
+        unordered_map<int, int> hash; // 存前缀和及其下标
+        hash[0] = 0; // s[0] = 0，下标初始化为 0 
+
         // 枚举所有的前缀和 s[i]
         for (int i = 1; i <= n; i ++ ) {
-            // 如果 s[i] 在哈希表中存在，则区间 [hash[s[i], i] 符合要求，计算下标差：i - hash[s[i]]，并更新最大下标差
+            // 如果 s[i] 在哈希表中存在，则区间 [hash[s[i]] ~ i] 符合要求，计算下标差：i - hash[s[i]]，并更新最大下标差
             if (hash.count(s[i]))
                 res = max(res, i - hash[s[i]]);
-            // 如果 s[i] 不在哈希表中，更新哈希表对应的值
-            else
-                hash[s[i]] = i;
+            // 如果 s[i] 不在哈希表中，更新哈希表对应的值（注意：else 必须写）
+            else hash[s[i]] = i; 
         }
 
         return res;
@@ -49,15 +48,14 @@ public:
         int n = nums.size();
         int res = 0;
 
-        unordered_map<int, int> hash;
-        hash[0] = 0;
-
         vector<int> s(n + 1);
-
         for (int i = 1; i <= n; i ++ ) {
             if (nums[i - 1] == 0) nums[i - 1] = -1;
             s[i] = s[i - 1] + nums[i - 1];
         }
+
+        unordered_map<int, int> hash;
+        hash[0] = 0;
 
         for (int i = 1; i <= n; i ++ ) {
             if (hash.count(s[i])) res = max(res, i - hash[s[i]]);
@@ -67,3 +65,35 @@ public:
         return res;
     }
 };
+
+
+// 二刷
+class Solution {
+public:
+    int findMaxLength(vector<int>& nums) {
+        int n = nums.size();
+        int res = 0;
+
+        for (int i = 0; i < n; i ++ ) {
+            if (nums[i] == 0) nums[i] = -1;
+        }
+
+        vector<int> s(n + 1);
+        for (int i = 1; i <= n;  i ++ ) {
+            s[i] = s[i - 1] + nums[i - 1];
+        }
+
+        unordered_map<int, int> hash;
+        hash[0] = 0;
+
+        for (int i = 1; i <= n; i ++ ) {
+            if (hash.count(s[i])) 
+                res = max(res, i - hash[s[i]]);
+            else hash[s[i]] = i;
+        }
+
+        return res;
+    }
+};
+
+

@@ -24,12 +24,12 @@ public:
             a = b;
             b = c;
         }
-        head->next = nullptr;
+        head->next = nullptr; // 不要忘记写这个
         return a;
     }
 
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        // 先将这两个链表反转
+        // 先将这两个链表反转（注意：别忘记写 l1 = 和 l2 = ）
         l1 = reverseList(l1);
         l2 = reverseList(l2);
 
@@ -52,13 +52,13 @@ public:
             }
             // 此时 t = l1->val + l2->val + t，也就是当前这一位的2个数相加再加上进位的 总和
 
-            // 新建一个节点 cur, 当前节点的值就是总和 t % 10 （取个位）
-            ListNode* cur = new ListNode(t % 10);
+            // 新建一个节点 node, 当前节点的值就是总和 t % 10 （取个位）
+            auto node = new ListNode(t % 10);
             t /= 10; // 当前节点的进位就是总和 t / 10 （取十位）
 
-            // 接下来把 cur 节点插到 head 后面
-            cur->next = dummy->next;
-            dummy->next = cur;
+            // 接下来把 node 节点插到 head 后面（头插法，画图理解）
+            node->next = dummy->next;
+            dummy->next = node;
         }
 
         return dummy->next;
@@ -100,9 +100,9 @@ public:
                 l2 = l2->next;
             }
             
-            ListNode* cur = new ListNode(t % 10);
-            cur->next = dummy->next;
-            dummy->next = cur;
+            ListNode* node = new ListNode(t % 10);
+            node->next = dummy->next;
+            dummy->next = node;
 
             t /= 10;
         }

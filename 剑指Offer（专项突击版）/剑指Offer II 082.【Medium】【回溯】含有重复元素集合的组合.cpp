@@ -42,33 +42,31 @@ public:
 };
 
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
     vector<int> path;
     vector<vector<int>> res;
 
-    void dfs(vector<int>& nums, int u, int target) {
+    void dfs(vector<int>& candidates, int u, int target) {
         if (target < 0) return;
-
         if (target == 0) {
             res.push_back(path);
             return;
         }
 
-        for (int i = u; i < nums.size(); i ++ ) {
-            if (i > u && nums[i] == nums[i - 1]) continue;
-
-            path.push_back(nums[i]);
-            dfs(nums, i + 1, target - nums[i]);
+        for (int i = u; i < candidates.size(); i ++ ) {
+            if (i > u && candidates[i] == candidates[i - 1]) continue;
+            path.push_back(candidates[i]);
+            dfs(candidates, i + 1, target - candidates[i]);
             path.pop_back();
         }
     }
 
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
         sort(candidates.begin(), candidates.end());
-
         dfs(candidates, 0, target);
         return res;
     }
 };
+

@@ -19,12 +19,12 @@ class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
         // 情况 1
-        if (p->val < root->val && q->val < root->val)
-            return lowestCommonAncestor(root->left, p, q);
+        if (p->val < root->val && q->val < root->val) return lowestCommonAncestor(root->left, p, q);
+        
         // 情况 2
-        if (p->val > root->val && q->val > root->val)
-            return lowestCommonAncestor(root->right, p, q);
-        // 剩下的情况 3 和 4 都是返回 root
+        if (p->val > root->val && q->val > root->val) return lowestCommonAncestor(root->right, p, q);
+        
+        // 情况 3 和 4 都是返回 root
         return root;
     }
 };

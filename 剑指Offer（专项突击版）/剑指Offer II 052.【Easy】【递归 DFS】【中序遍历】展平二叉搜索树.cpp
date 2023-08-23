@@ -24,6 +24,7 @@ public:
     void dfs(TreeNode* root) {
         // 递归出口：如果当前遍历到的节点为空，则返回
         if (root == nullptr) return;
+
         // 左
         dfs(root->left);
         // 根
@@ -40,6 +41,7 @@ public:
         tail = dummy;
 
         dfs(root);
+
         return dummy->right;
    }
 };
@@ -48,27 +50,28 @@ public:
 // 无注释版本
 class Solution {
 public:
-    TreeNode* tail = new TreeNode(-1);
+    TreeNode* tail;
 
     void dfs(TreeNode* root) {
         if (root == nullptr) return;
-
-        dfs(root->left);
         
+        dfs(root->left);
+
         tail->right = root;
         root->left = nullptr;
         tail = root;
-        
+
         dfs(root->right);
     }
 
     TreeNode* increasingBST(TreeNode* root) {
-        TreeNode* dummy = new TreeNode(-1);
+        auto dummy = new TreeNode(-1);
         tail = dummy;
 
         dfs(root);
+
         return dummy->right;
-   }
+    }
 };
 
 

@@ -10,7 +10,7 @@ public:
     int minimumLengthEncoding(vector<string>& words) {
         // 定义一个哈希集合，存字符串数组 words 中的字符串
         unordered_set<string> S; 
-        for (string word : words) S.insert(word);
+        for (string word: words) S.insert(word);
         
         // 遍历所有单词，将是其他单词后缀的单词删掉
         // 例如：word = "time" 截取所有后缀 ime me e 从哈希集合中删掉，即删掉了所有的后缀
@@ -30,13 +30,13 @@ public:
 };
 
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
     int minimumLengthEncoding(vector<string>& words) {
-        unordered_set<string> S; 
-        for (string word : words) S.insert(word);
-        
+        unordered_set<string> S;
+        for (string word: words) S.insert(word);
+
         for (string word: words) {
             for (int k = 1; k < word.size(); k ++ ) {
                 S.erase(word.substr(k));
@@ -44,11 +44,10 @@ public:
         }
 
         int res = 0;
-        
-        for (string word: S) {
-            res += (word.size() + 1);
+        for (string s: S) {
+            res += s.size() + 1;
         }
-        
+
         return res;
     }
 };

@@ -14,7 +14,7 @@ public:
         int k = 0;  
 
         // 循环 n - 1 次（因为第一个数是 1，已经有了，要求第 n 个数，还需要 n - 1 个数）
-        while (-- n) { 
+        while ( -- n) { 
             // 每次将三个序列中的最小的数 t 加入丑数序列
             int t = min(res[i] * 2, min(res[j] * 3, res[k] * 5));
             res.push_back(t);
@@ -41,7 +41,7 @@ public:
         int j = 0;
         int k = 0;  
 
-        while (-- n) { 
+        while ( -- n) { 
             int t = min(res[i] * 2, min(res[j] * 3, res[k] * 5));
             res.push_back(t);
 

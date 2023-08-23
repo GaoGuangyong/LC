@@ -14,15 +14,12 @@ public:
     void dfs(int u) {
         // 选择 u
         path.push_back(u);
-
-        // 如果已经搜索到了终点，就将当前路径加入最终结果数组
-        if (u == n - 1) res.push_back(path); 
+        
+        if (u == n - 1) res.push_back(path); // 如果已经搜索到了终点，就将当前路径加入最终结果数组
 
         // DFS 所有 u 指向的节点 v
-        for (int v : graph[u]) {
-            dfs(v);
+        for (int v: graph[u]) dfs(v);
 
-        }
         // 撤销选择
         path.pop_back();
     }
@@ -37,24 +34,20 @@ public:
 };
 
 
-// 无注释版本
-
+// 二刷
 class Solution {
 public:
-    int n; 
     vector<vector<int>> graph;
     vector<int> path;
     vector<vector<int>> res;
+    int n;
 
     void dfs(int u) {
         path.push_back(u);
+        if (u == n - 1) res.push_back(path);
 
-        if (u == n - 1) res.push_back(path); 
+        for (int v: graph[u]) dfs(v);
 
-        for (int v : graph[u]) {
-            dfs(v);
-        }
-        
         path.pop_back();
     }
 

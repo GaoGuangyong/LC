@@ -24,7 +24,7 @@ public:
         int m = nums1.size();
         int n = nums2.size();
         
-        // 定义小顶堆，注意每个元素都是数对类型（vector<int> 长度为 2）
+        // 定义小顶堆，注意每个元素都是数组类型，长度为 3
         priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> heap;
 
         // 把每个序列的第 1 个元素（数对和：nums2[i] + nums1[0]）先加入堆中
@@ -38,12 +38,13 @@ public:
             if (heap.size()) {
                 auto t = heap.top(); // 取出堆顶元素（当前堆中，数对的和的最小值）
                 heap.pop();
+
                 // 将数对的和对应的 2 个数，以数组的方式输出到结果数组中
-                res.push_back( {nums1[t[1]], nums2[t[2]]} );
+                res.push_back({nums1[t[1]], nums2[t[2]]});
 
                 // 只要堆顶元素所在的序列还有元素，就把该序列中下一个元素加入堆中（nums2 下标不变，nums1 下标 + 1）
-                if (t[1] + 1 < m) {
-                    heap.push( {nums2[t[2]] + nums1[t[1] + 1], t[1] + 1, t[2]} );
+                if (t[1] < m - 1) {
+                    heap.push(nums2[t[2]] + nums1[t[1] + 1], t[1] + 1, t[2]);
                 }
             }
         }
@@ -58,28 +59,25 @@ public:
 class Solution {
 public:
     vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
-
         vector<vector<int>> res;
-        
+        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> heap;
+
         int m = nums1.size();
         int n = nums2.size();
-        
-        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> heap;
 
         for (int i = 0; i < n; i ++ ) {
             heap.push({nums2[i] + nums1[0], 0, i});
         }
 
-
         while (k -- ) {
             if (heap.size()) {
                 auto t = heap.top();
                 heap.pop();
-                
-                res.push_back( {nums1[t[1]], nums2[t[2]]} );
 
-                if (t[1] + 1 < m) {
-                    heap.push( {nums2[t[2]] + nums1[t[1] + 1], t[1] + 1, t[2]} );
+                res.push_back({nums1[t[1]], nums2[t[2]]});
+
+                if (t[1] < m - 1) {
+                    heap.push({nums2[t[2]] + nums1[t[1] + 1], t[1] + 1, t[2]});
                 }
             }
         }

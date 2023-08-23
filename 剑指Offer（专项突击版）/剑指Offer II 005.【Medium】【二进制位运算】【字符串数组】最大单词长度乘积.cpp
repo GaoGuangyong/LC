@@ -6,28 +6,28 @@
 class Solution {
 public:
     int maxProduct(vector<string>& words) {
-        int n = words.size();
         // 先求一下每个单词包含哪些字母，以 int 型整数的形式存在 state 数组中
         vector<int> state; // stat[i] 表示下标为 i 的单词包含的字母有哪些
 
         // 枚举 words 数组中的每一个单词 word
         for (string word: words) {
-            int s = 0;
+            int idx = 0; // 用于将 state[i] 在 word[i] 中有字母的位置为 1
             // 枚举当前单词的每一位字母 c，将 state 的对应位 置为 1
             for (char c: word) {
-                // 先将 1 左移 c - 'a' 位，再将左移后的结果 | s，就可以将 s 的 c - 'a' 位 置为 1，而其余位置保持不变           
-                s |= (1 << (c - 'a')); 
+                // 先将 1 左移 c - 'a' 位，再将左移后的结果 | s，就可以将 s 的 c - 'a' 位 置为 1，而其余位置保持不变  
+                // 例如：用 x = 00000000 | 00100000，可将 x 的对应位置为 1  
+                idx |= (1 << (c - 'a'));
             }
             // 枚举完当前单词后，s 就是当前单词对应的 int 型整数，将 s 插入 state 数组中即可
-            state.push_back(s);
+            state.push_back(idx);
         }
 
         int res = 0;
 
-        // 俩俩比较
-        for (int i = 0; i < n; i ++ ) {
-            for (int j = i + 1; j < n; j ++ ) {
-                // 如果 state[i] & state[j] == 0，则说明 state[i] 和 state[j] 的二进制表示的每一位都不会是两个 1，故不存在相同的字母
+        // 俩俩比较：注意 j 的起点，注意 (state[i] & state[j]) 得加括号
+        for (int i = 0; i < words.size(); i ++ ) {
+            for (int j = i + 1; j < words.size(); j ++ ) {
+                // 如果 state[i] & state[j] == 0，则说明 state[i] 和 state[j] 的二进制表示的每一位都不会是两个 1，即每一位都不同，故不存在相同的字母
                 if ((state[i] & state[j]) == 0) 
                     res = max(res, (int)(words[i].size() * words[j].size())); // 计算两个单词的长度乘积，更新长度乘积的最大值
             }
@@ -46,16 +46,15 @@ public:
         for (string word: words) {
             int s = 0;
             for (char c: word) {
-                s |= (1 << (c - 'a'));
+                s |= (1 << (c - 'a')); 
             }
             state.push_back(s);
         }
 
         int res = 0;
-        int n = words.size();
 
-        for (int i = 0; i < n; i ++ ) {
-            for (int j = i + 1; j < n; j ++ ) {
+        for (int i = 0; i < words.size(); i ++ ) {
+            for (int j = i + 1; j < words.size(); j ++ ) {
                 if ((state[i] & state[j]) == 0) {
                     res = max(res, (int)(words[i].size() * words[j].size()));
                 }
@@ -66,3 +65,33 @@ public:
     }
 };
 
+
+// 二刷
+class Solution {
+public:
+    int maxProduct(vector<string>& words) {
+        vector<int> state;
+
+        for (string word: words) {
+            int s = 0;
+            for (char c: word) {
+                s |= (1 << (c - 'a')); 
+            }
+            state.push_back(s);
+        }
+
+        int res = 0;
+
+        for (int i = 0; i < words.size(); i ++ ) {
+            for (int j = i + 1; j < words.size(); j ++ ) {
+                if ((state[i] & state[j]) == 0) {
+                    int len1 = words[i].size();
+                    int len2 = words[j].size();
+                    res = max(res, len1 * len2);
+                }
+            }
+        }
+
+        return res;
+    }
+};

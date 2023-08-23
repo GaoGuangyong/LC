@@ -8,7 +8,6 @@
 
 class Solution {
 public:
-    int n;
     vector<int> path; // 当前方案
     vector<vector<int>> res; // 所有方案
     vector<bool> visit; // 标记数组
@@ -16,13 +15,13 @@ public:
     // 递归函数：从 nums 数组的下标 u 开始枚举每个位置填什么数
     void dfs(vector<int>& nums, int u) {
         // 递归出口：如果当前方案中的元素个数 等于 数组长度
-        if (path.size() == n) {
+        if (u == nums.size()) {
             res.push_back(path);
             return;
         }
         
         // 否则，从 0 开始枚举每一个位置
-        for (int i = 0; i < n; i ++ ) {
+        for (int i = 0; i < nums.size(); i ++ ) {
             // 减枝：如果 nums[i] 是重复数字，且 nums[i - 1] 没被用过，则跳过
             if (i > 0 && nums[i] == nums[i - 1] && visit[i - 1] == false) continue;
 
@@ -41,8 +40,7 @@ public:
     }
 
     vector<vector<int>> permuteUnique(vector<int>& nums) {
-        n = nums.size();
-        visit.assign(n, false); // 将标记数组初始化成 n 个 false
+        visit.assign(nums.size(), false); // 将标记数组初始化成 n 个 false
 
         sort(nums.begin(), nums.end()); // 先对原数组进行升序排序
 
@@ -52,23 +50,22 @@ public:
 };
 
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
-    int n;
     vector<int> path;
     vector<vector<int>> res;
     vector<bool> visit;
 
     void dfs(vector<int>& nums, int u) {
-        if (path.size() == n) {
+        if (u == nums.size()) {
             res.push_back(path);
             return;
         }
-
-        for (int i = 0; i < n; i ++ ) {
+        
+        for (int i = 0; i < nums.size(); i ++ ) {
             if (i > 0 && nums[i] == nums[i - 1] && visit[i - 1] == false) continue;
-
+            
             if (visit[i] == false) {
                 path.push_back(nums[i]);
                 visit[i] = true;
@@ -82,13 +79,10 @@ public:
     }
 
     vector<vector<int>> permuteUnique(vector<int>& nums) {
-        n = nums.size();
-        visit.assign(n, false);
-
+        visit.assign(nums.size(), false);
         sort(nums.begin(), nums.end());
 
         dfs(nums, 0);
         return res;
     }
 };
-

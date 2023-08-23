@@ -13,22 +13,22 @@ public:
         stack<int> stk;
 
         // 遍历字符数组
-        for (int i = 0; i < tokens.size(); i ++ ) {
+        for (string s: tokens) {
             // 如果时【运算符】，就出栈两个数来计算，将计算的结果再入栈  
-            if (tokens[i] == "+" || tokens[i] == "-" || tokens[i] == "*" || tokens[i] == "/") {
+            if (s == "+" || s == "-" || s == "*" || s == "/") {
                 // 从栈顶弹出两个数
                 int second = stk.top(); // 先出栈的是第 2 个数
                 stk.pop();
                 int first = stk.top(); // 后出栈的是第 1 个数
                 stk.pop();
                 // 计算规则：第 1 个数 加/减/乘/除 第 2 个数
-                if (tokens[i] == "+") stk.push(first + second); 
-                if (tokens[i] == "-") stk.push(first - second);
-                if (tokens[i] == "*") stk.push(first * second);
-                if (tokens[i] == "/") stk.push(first / second);
+                if (s == "+") stk.push(first + second);
+                if (s == "-") stk.push(first - second);
+                if (s == "*") stk.push(first * second);
+                if (s == "/") stk.push(first / second);
             }
             // 如果是【数字】，则直接入栈，记得转换成 int 型
-            else stk.push(stoi(tokens[i]));
+            else stk.push(stoi(s));
         }
         // 最后栈顶元素即是逆波兰表达式的计算结果
         int res = stk.top();
@@ -38,29 +38,31 @@ public:
 };
 
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
         stack<int> stk;
 
-        for (int i = 0; i < tokens.size(); i ++ ) {
-            if (tokens[i] == "+" || tokens[i] == "-" || tokens[i] == "*" || tokens[i] == "/") {
+        for (string s: tokens) {
+            if (s == "+" || s == "-" || s == "*" || s == "/") {
                 int second = stk.top();
                 stk.pop();
                 int first = stk.top();
                 stk.pop();
-
-                if (tokens[i] == "+") stk.push(first + second); 
-                if (tokens[i] == "-") stk.push(first - second);
-                if (tokens[i] == "*") stk.push(first * second);
-                if (tokens[i] == "/") stk.push(first / second);
+                if (s == "+") stk.push(first + second);
+                if (s == "-") stk.push(first - second);
+                if (s == "*") stk.push(first * second);
+                if (s == "/") stk.push(first / second);
             }
-            else stk.push(stoi(tokens[i]));
+            else {
+                stk.push(stoi(s));
+            }
         }
 
-        return stk.top();
+        int res = stk.top();
+
+        return res;
     }
 };
-
 

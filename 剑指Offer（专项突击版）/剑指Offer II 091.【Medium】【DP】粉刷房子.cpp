@@ -27,7 +27,8 @@ class Solution {
 public:
     int minCost(vector<vector<int>>& costs) {
         int n = costs.size(); // 一共 n 间房子
-        costs.insert(costs.begin(), {0, 0, 0});  // 将原始数组往后挪动一位, 方便处理（妙）
+
+        costs.insert(costs.begin(), {0, 0, 0});  // 关键技巧！将原始数组往后挪动一位, 方便处理（妙）
 
         // 定义状态数组
         vector<vector<int>> f(n + 1, vector<int>(3, INT_MAX)); // 因为求 min 所以初始花费定为正无穷
@@ -48,24 +49,26 @@ public:
 };
 
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
     int minCost(vector<vector<int>>& costs) {
         int n = costs.size();
+
         costs.insert(costs.begin(), {0, 0, 0});
 
-        vector<vector<int>> f(n + 1, vector<int>(3, INT_MAX)); 
+        vector<vector<int>> f(n + 1, vector<int>(3, INT_MAX));
 
         f[0][0] = 0;
         f[0][1] = 0;
         f[0][2] = 0;
 
         for (int i = 1; i <= n; i ++ ) {
-            f[i][0] = min(f[i - 1][1], f[i - 1][2]) + costs[i][0];
-            f[i][1] = min(f[i - 1][0], f[i - 1][2]) + costs[i][1];
-            f[i][2] = min(f[i - 1][0], f[i - 1][1]) + costs[i][2];
+            f[i][0] = min(f[i - 1][1], f[i -1][2]) + costs[i][0];
+            f[i][1] = min(f[i - 1][0], f[i -1][2]) + costs[i][1];
+            f[i][2] = min(f[i - 1][0], f[i -1][1]) + costs[i][2];
         }
+
         return min(f[n][0], min(f[n][1], f[n][2]));
     }
 };

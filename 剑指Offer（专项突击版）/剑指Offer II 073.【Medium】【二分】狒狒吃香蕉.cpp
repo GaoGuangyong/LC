@@ -1,5 +1,5 @@
 
-// 问题抽象：求 ⌈piles[0] / k⌉ + ⌈piles[1] / k⌉ + ... + ⌈piles[n-1] / k⌉ <= h 时 k 的最小值
+// 问题抽象：求 ⌈piles[0] / k⌉ + ⌈piles[1] / k⌉ + ... + ⌈piles[n - 1] / k⌉ <= h 时 k 的最小值
 // ⌈ ⌉ 表示上取整
 // 注意到 k 越小，所花费的时间越长，我们要找到一个最小的 k 满足花费的时间 <= h
 // 二分查找这个 k 值，如果花费的时间 <= h，我们就继续减小 k，否则我们增大 k
@@ -7,11 +7,11 @@
 
 class Solution {
 public:
-    // 辅助函数：求表达式 ⌈piles[0] / k + ⌈piles[1] / k + ... + ⌈piles[n-1] / k 的和
-    int get(vector<int> piles, int k) {
+    // 辅助函数：求表达式 ⌈piles[0] / mid + ⌈piles[1] / mid + ... + ⌈piles[n - 1] / mid 的和
+    int get(vector<int> piles, int mid) {
         int res = 0;
         for (int i = 0; i < piles.size(); i ++ ) {
-            res += (piles[i] + k - 1) / k;
+            res += (piles[i] + mid - 1) / mid;
         }
         return res;
     }
@@ -39,14 +39,13 @@ public:
 };
 
 
-
-// 无注释版本
+// 二刷
 class Solution {
 public:
-    int get(vector<int> piles, int k) {
+    int check(vector<int>& piles, int mid) {
         int res = 0;
         for (int i = 0; i < piles.size(); i ++ ) {
-            res += (piles[i] + k - 1) / k;
+            res += (piles[i] + mid - 1) / mid;
         }
         return res;
     }
@@ -57,14 +56,16 @@ public:
 
         while (l < r) {
             int mid = l + r >> 1;
-            if (get(piles, mid) <= h)
+            if (check(piles, mid) <= h)
                 r = mid;
             else 
                 l = mid + 1;
         }
-
+        
         return l;
     }
 };
 
+
+    
 

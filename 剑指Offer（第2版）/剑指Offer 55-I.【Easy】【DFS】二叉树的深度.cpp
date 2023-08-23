@@ -11,14 +11,16 @@
 // 解法一
 class Solution {
 public:
-    int res = 0;
+    int res = 0; // 二叉树深度的最大值
 
     // 递归函数：从二叉树 root 的深度 depth 开始遍历，并在遍历过程中维护最大深度
     void dfs(TreeNode* root, int depth) {
         // 递归出口：若遍历到空节点，则直接返回
         if (root == nullptr) return; 
+
         // 每遍历到一个节点，都先更新当前的最大深度
         res = max(res, depth); 
+        
         // 递归处理左右子树
         dfs(root->left, depth + 1);
         dfs(root->right, depth + 1);

@@ -14,7 +14,7 @@
 
 class Solution {
 public:
-    // dfs 函数：判断以 root 为根的这棵子树是否包含 1 节点，如果不包含 1，则删掉该二叉树
+    // dfs 函数：判断以 root 为根的这棵子树是否含有 1 节点（true 表示含有 1，false 表示不含 1），如果不含 1，则删掉该二叉树
     bool dfs(TreeNode* root) {
         // 递归出口，如果当前节点为空，则肯定不含 1，返回 false
         if (root == nullptr) return false;
@@ -32,8 +32,8 @@ public:
     }
 
     TreeNode* pruneTree(TreeNode* root) {
-        // 如果以根节点开始的整个树都没有 1，则把整个树删掉，返回空树
-        if (dfs(root) == false) return nullptr;
+        // 如果以根节点开始的整个树都没有 1，则把整个树删掉
+        if (dfs(root) == false) root = nullptr;
         return root;
     }
 };
@@ -47,13 +47,13 @@ public:
 
         if (dfs(root->left) == false) root->left = nullptr;
         if (dfs(root->right) == false) root->right = nullptr;
-            
+
         if (root->val == 1 || root->left != nullptr || root->right != nullptr) return true;
         else return false;
     }
 
     TreeNode* pruneTree(TreeNode* root) {
-        if (dfs(root) == false) return nullptr;
+        if (dfs(root) == false) root = nullptr;
         return root;
     }
 };

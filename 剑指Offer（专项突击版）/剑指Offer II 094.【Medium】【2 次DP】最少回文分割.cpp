@@ -34,19 +34,15 @@ public:
         // 第一次 DP 的状态数组 f1 的实现
         for (int i = 1; i <= n; i ++ ) {
             for (int j = 1; j <= i; j ++ ) {
-                // 当 s[j ~ i] 的长度 == 1 时，必是回文串
-                if (j == i) f1[j][i] = true;
-                // 当 s[j ~ i] 的长度 == 2 时，若 s[j] == s[i]，则是回文串
-                else if (i - j + 1 == 2 && s[j] == s[i]) f1[j][i] = true;
-                // 当 s[j ~ i] 的长度 > 2 时，若 s[j] == s[i] && f[j + 1][i - 1] ，则是回文串
-                else if (s[j] == s[i] && f1[j + 1][i - 1] == true) f1[j][i] = true;
-                // 其他情况都不是回文串
-                else f1[j][i] = false;
+                if (j == i) f1[j][i] = true; // 当 s[j ~ i] 的长度 == 1 时，必是回文串
+                else if (i - j + 1 == 2 && s[j] == s[i]) f1[j][i] = true; // 当 s[j ~ i] 的长度 == 2 时，若 s[j] == s[i]，则是回文串
+                else if (s[j] == s[i] && f1[j + 1][i - 1] == true) f1[j][i] = true; // 当 s[j ~ i] 的长度 > 2 时，若 s[j] == s[i] && f[j + 1][i - 1] ，则是回文串
+                else f1[j][i] = false; // 其他情况都不是回文串
             }
         }
 
         // 第二次 DP 的状态数组 f2 的定义
-        f2 = vector<int>(n + 1); 
+        f2 = vector<int>(n + 1);
         // 第二次 DP 的状态数组 f2 的实现
         for (int i = 1; i <= n; i ++ ) {
             f2[i] = INT_MAX; // 因为要求最小值，所以 f2[i] 的初值设为正无穷

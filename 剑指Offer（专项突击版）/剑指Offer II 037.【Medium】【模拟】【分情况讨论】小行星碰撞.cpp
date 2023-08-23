@@ -26,7 +26,7 @@ public:
                 if (res.size() && res.back() > 0 && res.back() == abs(x)) res.pop_back();
 
                 // 如果 res 数组已经空了，或者剩下的是向左走的就保留下来
-                else if (res.empty() || res.back() < 0) res.push_back(x);
+                else if (res.empty() || res.back() < 0) res.push_back(x);  // ！！！这里必须写 else if 
 
                 // 其它情况，说明是向右走的，且比当前行星大的，则不会被当前行星撞掉，保留(即什么都不用做)
             }
@@ -45,12 +45,9 @@ public:
 
         for (int x: asteroids) {
             if (x > 0) res.push_back(x);
-
-            else if (x < 0) {
+            else {
                 while (res.size() && res.back() > 0 && res.back() < abs(x)) res.pop_back();
-
                 if (res.size() && res.back() > 0 && res.back() == abs(x)) res.pop_back();
-
                 else if (res.empty() || res.back() < 0) res.push_back(x);
             }
         }

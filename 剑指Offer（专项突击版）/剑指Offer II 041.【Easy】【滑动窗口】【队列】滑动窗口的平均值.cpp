@@ -5,13 +5,13 @@
 
 class MovingAverage {
 public:
-    int len = 0;
+    int size = 0;
     queue<int> q; // 定义队列
     double sum = 0;
 
     // 用滑动窗口的大小 size 初始化对象
     MovingAverage(int size) {
-        len = size;
+        this->size = size;
     }
 
     // 将 val 入队，求此时滑动窗口内元素的平均值
@@ -19,7 +19,7 @@ public:
         q.push(val);
         sum += val;
         // 如果当前数字入队后，队列长度超过了滑动窗口的大小，则把队头的值减去，并让队头的出队
-        if (q.size() > len) {
+        if (q.size() > size) {
             sum -= q.front();
             q.pop();
         }
@@ -32,18 +32,18 @@ public:
 // 无注释版本
 class MovingAverage {
 public:
-    int len = 0;
+    int size = 0;
     queue<int> q; 
     double sum = 0;
 
     MovingAverage(int size) {
-        len = size;
+        this->size = size;
     }
 
     double next(int val) {
         q.push(val);
         sum += val;
-        if (q.size() > len) {
+        if (q.size() > size) {
             sum -= q.front();
             q.pop();
         }

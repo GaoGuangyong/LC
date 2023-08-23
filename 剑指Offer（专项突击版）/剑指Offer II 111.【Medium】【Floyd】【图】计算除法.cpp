@@ -13,37 +13,39 @@
 class Solution {
 public:
     vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
-        // 存顶点
-        unordered_set<string> vers; // 每个点是一个字母构成的字符串，用 string
-        // 存边
-        unordered_map<string, unordered_map<string, double>> d; // key: 顶点 value: 顶点->权值
+        // 定义集合：存顶点，每个点是一个字母构成的字符串，用 string
+        unordered_set<string> v;
+        // 定义哈希表：存边，例如 <顶点1 -> <顶点2 -> 权值>> 就用 e[顶点1][顶点2] = 权值 来表示
+        unordered_map<string, unordered_map<string, double>> e; 
 
         // 枚举所有的方程，建立图结构
         for (int i = 0; i < equations.size(); i ++ ) {
-            string a = equations[i][0]; // 除数
-            string b = equations[i][1]; // 被除数
-            double c = values[i];       // a / b 的结果
-            d[a][b] = c; 
-            d[b][a] = 1 / c;
-            vers.insert(a), vers.insert(b); // 将 a, b 加入顶点集合
+            string a = equations[i][0]; // 分子 a：除数
+            string b = equations[i][1]; // 分母 b：被除数
+            double c = values[i];  // a / b 的结果
+            e[a][b] = c;       // 记录 a / b 的结果
+            e[b][a] = 1 / c;   // 记录 b / a 的结果
+            v.insert(a); // 将 a 加入顶点集合
+            v.insert(b); // 将 b 加入顶点集合
         }
 
-        // Floyd 算法的应用
-        for (string k: vers) // 遍历点 k
-            for (string i: vers) // 遍历点 i
-                for (string j: vers) // 遍历点 j
-                    if (d[i][k] && d[j][k]) // 如果 i -> k 和 k -> j 存在
-                        d[i][j] = d[i][k] * d[k][j]; // i -> j 的距离就是 i 到 k 的距离 * k 到 j 的距离
+        // 使用 Floyd 算法计算出所有点之间的距离
+        for (string k: v) // 遍历中点 k
+            for (string i: v) // 遍历左端点 i
+                for (string j: v) // 遍历右端点 j
+                    if (e[i][k] != 0 && e[j][k] != 0) // 如果 i -> k 和 k -> j 存在，则更新 i -> j 
+                        e[i][j] = e[i][k] * e[k][j]; // i -> j 的距离就是 i 到 k 的距离 * k 到 j 的距离
  
         vector<double> res; // 结果数组
+
         // 遍历查询数组
-        for (vector<string> q: queries) {
-            string a = q[0];
-            string b = q[1];
-            if (d[a][b]) // 如果 a -> b 的权值存在，则在结果数组中插入该权值
-                res.push_back(d[a][b]);
-            else // 如果 a -> b 的权值不存在，则在结果数组中插入 -1 
-                res.push_back(-1);
+        for (auto q: queries) {
+            string a = q[0];  // 查询的分子
+            string b = q[1];  // 查询的分母
+            if (e[a][b] != 0) // 如果 a / b 的结果存在，则在结果数组中插入该权值
+                res.push_back(e[a][b]);
+            // 否则，如果 a / b 的结果不存在，则在结果数组中插入 -1 
+            res.push_back(-1);
         }
 
         return res;
@@ -56,35 +58,35 @@ class Solution {
 public:
     vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
         unordered_set<string> v;
-        unordered_map<string, unordered_map<string, double>> d;
+        unordered_map<string, unordered_map<string, double>> e;
 
         for (int i = 0; i < equations.size(); i ++ ) {
             string a = equations[i][0];
             string b = equations[i][1];
             double c = values[i];
-            d[a][b] = c;
-            d[b][a] = 1 / c;
+            e[a][b] = c;
+            e[b][a] = 1 / c;
             v.insert(a);
             v.insert(b);
         }
 
-        for (string k: v) 
+        for (string k: v)
             for (string i: v)
                 for (string j: v)
-                    if (d[i][k] != 0 && d[j][k] != 0)
-                        d[i][j] = d[i][k] * d[k][j];
+                    if (e[i][k] != 0 && e[j][k] != 0)
+                        e[i][j] = e[i][k] * e[k][j];
 
         vector<double> res;
 
-        for (auto query: queries) {
-            string a = query[0];
-            string b = query[1];
-            if (d[a][b] != 0)
-                res.push_back(d[a][b]);
-            else   
-                res.push_back(-1);
+        for (auto q: queries) {
+            string a = q[0];
+            string b = q[1];
+            
+            if (e[a][b] != 0) res.push_back(e[a][b]);
+            else res.push_back(-1);
         } 
 
         return res;
     }
 };
+

@@ -34,7 +34,8 @@ public:
     int findRepeatNumber(vector<int>& nums) {
         // 从前往后遍历字符串，将 nums[i] 交换到 nums[nums[i]]
         for (int i = 0; i < nums.size(); i ++ ) {
-            if (nums[i] == i) continue; // 若 nums[i] == i，说明 nums[i] 已经在正确的位置上了，跳过
+            // 若 nums[i] == i，说明 nums[i] 已经在正确的位置上了，跳过
+            if (nums[i] == i) continue; 
             // 否则应该把 nums[i] 交换到正确的位置上，即 nums[nums[i]]
             while (nums[i] != i) {
                 if (nums[i] == nums[nums[i]]) return nums[i]; // 如果要交换的两个数相等，那么 nums[i] 就出现了重复，返回即可

@@ -6,7 +6,6 @@ public:
 
     // 给定整数矩阵 matrix 进行初始化
     NumMatrix(vector<vector<int>>& matrix) {
-        if (matrix.empty() || matrix[0].empty()) return; // 特判：如果矩阵为空，直接返回
         int m = matrix.size();
         int n = matrix[0].size();
 
@@ -19,7 +18,7 @@ public:
 
     // 求以 matrix[row1][col1] 为左上角，以 matrix[row2][col2] 为右下角的子矩阵的元素和
     int sumRegion(int x1, int y1, int x2, int y2) {
-        x1 ++, y1 ++, x2 ++, y2 ++; // 因为 a 的下标是从 0 开始的，所以先都 + 1
+        x1 ++, y1 ++, x2 ++, y2 ++; // 因为 s 的下标是从 1 开始的，而给的二维数组下标是从 0 开始的，所以先都 + 1
         return s[x2][y2] - s[x1 - 1][y2] - s[x2][y1 - 1] + s[x1 - 1][y1 - 1];
     }
 };

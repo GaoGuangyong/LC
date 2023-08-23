@@ -1,14 +1,16 @@
-// 设 x / y
+// 数学
 
-// 1.确定最终符号，将两个数都变成正的，a = abs(x), b = abs(y)
-//   把 x / y 转化成 a / b
+// 设要计算的是 a / b
+
+// 1.确定最终符号，将两个数都变成正的，x = abs(a), y = abs(b)
+// 把求 a / b 转化成 x / y，然后如果是负数，则再乘上 -1 
 
 // 2.先计算 31 个指数项，存到数组 exp 中：
-// exp = {b * 2^0, b * 2^1, b * 2^2, ......, b * 2^29, b * 2^30}
+// exp = { y * 2^0, y * 2^1, y * 2^2, ......, y * 2^29, y * 2^30 }
 
 // 3.按照从大到小的顺序遍历预处理的数组 exp
-//   如果 a >= b * 2^i，则可以用 a 减去 exp[i] (即 b * 2^i ) 再加上 1 << i（即 1 * 2^i）
-//   否则 a <  b * 2^i，则不做任何事，跳过
+//   如果 x >= y * 2^i，则可以用 x 减去 exp[i] (即 y * 2^i ) 再加上 1 << i（即 1 * 2^i ）
+//   否则 x <  y * 2^i，则跳过
 
 // 举例说明算法的过程
 // 60 / 3 = 20 = 10100 (二进制) = 2^2 + 2^4
@@ -24,8 +26,6 @@
 //    = a  - exp[4]  + 1 << 4  - exp[2]  + 1 << 2
 //    =                1 << 4            + 1 << 2
 
-
-
 typedef long long LL;
 
 class Solution {
@@ -36,8 +36,8 @@ public:
         if (x < 0 && y > 0 || x > 0 && y < 0) is_minus = true;
 
         // x, y 最小取 -2^31，取绝对值为 2^31，会爆 int
-        LL a = abs((LL)x);
-        LL b = abs((LL)y);
+        LL a = abs(x);
+        LL b = abs(y);
 
         // 【2】预处理，计算 31 个指数项，存到数组 exp 中
         vector<LL> exp;
@@ -46,10 +46,10 @@ public:
             exp.push_back(i); // i = b * 2^0, b * 2^1, b * 2^2, ..., b * 2^30
         }
 
-        LL res = 0; // 不含正负号的结果
+        LL res = 0; // 不含正负号的结果，注意：必须初始化 ！！！！！！
 
         // 【3】从大到小的遍历预处理的数组 exp
-        for (LL i = exp.size() - 1; i >= 0; i -- ) {
+        for (int i = exp.size() - 1; i >= 0; i -- ) {
             // 如果 a >= b * 2^i (即 b * 2^i )
             if (a >= exp[i]) { 
                 a -= exp[i]; // 则可以用 a 减去 exp[i]
@@ -76,8 +76,8 @@ public:
     int divide(int x, int y) {
         bool is_minus = false;
         if (x < 0 && y > 0 || x > 0 && y < 0) is_minus = true;
-        LL a = abs((LL)x);
-        LL b = abs((LL)y);
+        LL a = abs(x);
+        LL b = abs(y);
 
         vector<LL> exp;
         for (LL i = b; i <= a; i = i + i) {
@@ -98,6 +98,39 @@ public:
 
         return res;
 
+    }
+};
+
+
+// 二刷
+typedef long long LL;
+
+class Solution {
+public:
+    int divide(int a, int b) {
+        bool flag = false;
+        if (a < 0 && b > 0 || a > 0 && b < 0) flag = true;
+
+        LL x = abs(a);
+        LL y = abs(b);
+
+        vector<LL> e;
+        for (LL i = y; i <= x; i = i + i) e.push_back(i);
+
+        LL res = 0;
+
+        for (int i = e.size() - 1; i >= 0; i -- ) {
+            if (x >= e[i]) {
+                x -= e[i];
+                res += 1ll << i;
+            }
+        }
+
+        if (flag == true) res = -res;
+
+        if (res > INT_MAX || res < INT_MIN) res = INT_MAX;
+
+        return res;
     }
 };
 

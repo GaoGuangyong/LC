@@ -17,6 +17,7 @@ public:
     int height(TreeNode* root) {
         // 递归出口：当遍历到空节点时，遍历结束，返回深度 0
         if (root == nullptr) return 0;
+        
         // 否则，深度 = 左右子树深度的最大值 + 1
         return max(height(root->left), height(root->right)) + 1;
     }
@@ -28,10 +29,8 @@ public:
 
         // 否则，判断平衡二叉树的条件：左右子树的深度差 <= 1 && 左子树是平衡二叉树 && 右子树是平衡二叉树
         return (abs(height(root->left) - height(root->right)) <= 1 && isBalanced(root->left) && isBalanced(root->right));
-       
     }
 };
-
 
 
 // 无注释版本

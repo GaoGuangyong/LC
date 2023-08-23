@@ -24,11 +24,12 @@ public:
             hash[arr[i]] = i;
         }
 
-        // 定义状态数组 + 初始化
-        vector<vector<int>> f(n, vector<int>(n, 2));
-        
-        // 状态转移
         int res = 0;
+
+        // 定义状态数组 + 初始化
+        vector<vector<int>> f(n, vector<int>(n, 2)); // 最少选择了 arr[j] 和 arr[i]，因此将斐波那契子序列的长度初始化为 2
+
+        // 状态转移
         // 因为至少要有 3 个数构成子序列，故 i 的范围 [2 ~ n - 1]，j 的范围 [1 ~ i - 1]
         for (int i = 2; i < n; i ++ ) { 
             for (int j = 1; j < i; j ++ ) {
@@ -50,36 +51,33 @@ public:
 };
 
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
     int lenLongestFibSubseq(vector<int>& arr) {
         int n = arr.size();
 
-        unordered_map<int, int> hash; 
-        for (int i = 0; i < n; i ++ ) {
-            hash[arr[i]] = i;
-        }
-
-        vector<vector<int>> f(n, vector<int>(n, 2));
+        unordered_map<int, int> hash;
+        for (int i = 0; i < n; i ++ ) hash[arr[i]] = i;
         
+        vector<vector<int>> f(n, vector<int>(n, 2));
+
         int res = 0;
-        for (int i = 2; i < n; i ++ ) { 
+
+        for (int i = 2; i < n; i ++ ) {
             for (int j = 1; j < i; j ++ ) {
-                int x = arr[i] - arr[j]; 
-                if (x < arr[j] && hash.count(x)) { 
+                int x = arr[i] - arr[j];
+                if (hash.count(x) && x < arr[j]) {
                     int k = hash[arr[i] - arr[j]];
                     f[i][j] = max(f[i][j], f[j][k] + 1);
                 }
                 res = max(res, f[i][j]);
             }
         }
-            
-        if (res < 3) res = 0;
+
+        if (res == 2) return 0;
         return res;
     }
 };
-
-
 
 

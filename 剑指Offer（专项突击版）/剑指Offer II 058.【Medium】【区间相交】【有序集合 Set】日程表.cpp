@@ -40,27 +40,21 @@ public:
 // 无注释版本
 class MyCalendar {
 public:
-    int INF = 1e9;
     set<pair<int, int>> S;
-
+    int INF = 1e9;
+    
     MyCalendar() {
         S.insert({-INF, -INF});
         S.insert({INF, INF});
     }
-
+    
     bool book(int start, int end) {
         auto it = S.lower_bound({start, -INF});
-
-        if (it->first < end || ( -- it)->second > start) return false;
-        
-        S.insert({start, end});
+        if (it->first < end || (--it)->second > start) return false;
+        else S.insert({start, end});
         return true;
     }
 };
-
-
-
-
 
 
 
@@ -74,8 +68,12 @@ class MyCalendar {
 public:
     vector<pair<int, int>> booked;
 
+    MyCalendar() {
+
+    }
+
     bool book(int start, int end) {
-        for (auto& [l, r] : booked) {
+        for (auto& [l, r]: booked) {
             if (l < end && start < r) {
                 return false;
             }
@@ -84,8 +82,5 @@ public:
         return true;
     }
 };
-
-
-
 
 

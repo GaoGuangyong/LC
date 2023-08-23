@@ -19,22 +19,22 @@ public:
         int sum = accumulate(nums.begin(), nums.end(), 0); // 求数组中所有元素的和
         if (sum & 1) return false; // 如果和是奇数，则无法划分
 
-        int target = sum / 2; // 背包要凑的目标：总和的一半
+        int m = sum / 2; // 目标背包容量 m：总容量的一半
         // 定义状态数组
-        vector<int> f(target + 1); 
+        vector<int> f(m + 1); 
         // 初始化
         f[0] = 1; 
 
-        // 枚举每个物品
+        // 枚举物品数量（1 ~ n）
         for (int i = 1; i <= n; i ++ ) {
-            // 从大到小枚举每个物品的体积
-            for (int j = target; j >= 0; j -- ) {
+            // 从大到小枚举背包容量（m ~ 0）
+            for (int j = m; j >= 0; j -- ) {
                 if (j >= nums[i - 1]) {
                     f[j] = f[j] | f[j - nums[i - 1]]; // 只要有一个是 1 就是 1
                 }
             }
         }
-        return f[target];
+        return f[m];
     }
 };
 
