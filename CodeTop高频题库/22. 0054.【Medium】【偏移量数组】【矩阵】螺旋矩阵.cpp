@@ -12,8 +12,7 @@ class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
         vector<int> res;
-        // 先判空，再计算行数和列数
-        if (matrix.empty() || matrix[0].empty()) return res;
+        
         int m = matrix.size();
         int n = matrix[0].size();
 
@@ -34,16 +33,55 @@ public:
             // 求下一个遍历的位置 (a, b)
             int a = x + dx[d];
             int b = y + dy[d];
+
             // 若下一个位置 (a, b) 越界或已经走过了，则换下一个方向
-            if (a < 0 || a >= m || b < 0 || b >= n || visit[a][b] == true) {
+            if (a < 0 || a >= m || b < 0 || b >= n || visit[a][b] == true) { 
                 d = (d + 1) % 4; // 注意这种写法：(使 d 在 0->1->2->3->0 间循环)
                 a = x + dx[d];
                 b = y + dy[d];
             }
-            // 将 (a, b) 更新为下一个遍历位置 (x, y)
+            // 否则，可以走到 (a, b)，故将 (a, b) 更新为下一个遍历位置 (x, y)
             x = a;
             y = b;
         }
+        return res;
+    }
+};
+
+
+// 二刷
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> res;
+
+        int m = matrix.size();
+        int n = matrix[0].size();
+
+        int dx[4] = {0, 1, 0, -1};
+        int dy[4] = {1, 0, -1, 0};
+
+        vector<vector<bool>> visit(m, vector<bool>(n, false));
+
+        int x = 0, y = 0, d = 0;
+
+        for (int i = 0; i < m * n; i ++ ) {
+            res.push_back(matrix[x][y]);
+            visit[x][y] = true;
+
+            int a = x + dx[d];
+            int b = y + dy[d];
+
+            if (a < 0 || a >= m || b < 0 || b >= n || visit[a][b] == true) { // 注意是 if 不是 while
+                d = (d + 1) % 4;
+                a = x + dx[d];
+                b = y + dy[d];
+            }
+
+            x = a;
+            y = b;
+        }
+
         return res;
     }
 };

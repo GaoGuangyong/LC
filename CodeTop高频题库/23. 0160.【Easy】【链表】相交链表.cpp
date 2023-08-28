@@ -24,20 +24,22 @@ public:
     }
 };
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        auto p = headA;
-        auto q = headB;
+        auto p1 = headA;
+        auto p2 = headB;
 
-        while (p != q) {
-            if (p != nullptr) p = p->next;
-            else p = headB;
-            if (q != nullptr) q = q->next;
-            else q = headA;
+        while (p1 != p2) {
+            if (p1 != nullptr) p1 = p1->next;
+            else p1 = headB;
+            if (p2 != nullptr) p2 = p2->next;
+            else p2 = headA;
         }
 
-        return q;
+        return p1;
     }
 };
+
+

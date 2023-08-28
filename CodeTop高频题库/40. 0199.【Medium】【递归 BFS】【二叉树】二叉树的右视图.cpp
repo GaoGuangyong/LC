@@ -49,27 +49,28 @@ public:
 
 
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
     vector<int> rightSideView(TreeNode* root) {
         if (root == nullptr) return {};
-        vector<int> res; 
 
         queue<TreeNode*> q;
         q.push(root);
-
-        while (q.size()) { 
-            int len = q.size(); 
-
+        
+        vector<int> res;
+    
+        while (q.size()) {
+            int len = q.size();
+            
             while (len -- ) {
                 auto t = q.front();
-                q.pop(); 
+                q.pop();
+
+                if (len == 0) res.push_back(t->val);
 
                 if (t->left != nullptr) q.push(t->left);
                 if (t->right != nullptr) q.push(t->right);
-
-                if (len == 0) res.push_back(t->val);
             }
         }
 

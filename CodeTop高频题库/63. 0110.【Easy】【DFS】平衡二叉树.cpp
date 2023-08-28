@@ -27,7 +27,7 @@ public:
         if (root == nullptr) return true; 
 
         // 否则，判断平衡二叉树的条件：左右子树的深度差 <= 1 && 左子树是平衡二叉树 && 右子树是平衡二叉树
-        return (abs(height(root->left) - height(root->right)) <= 1 && isBalanced(root->left) && isBalanced(root->right));
+        return abs(height(root->left) - height(root->right)) <= 1 && isBalanced(root->left) && isBalanced(root->right);
        
     }
 };

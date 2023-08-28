@@ -53,12 +53,12 @@ public:
 };
 
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
     vector<vector<char>> grid;
     int m, n;
-
+    int res = 0;
     int dx[4] = {-1, 0, 1, 0};
     int dy[4] = {0, 1, 0, -1};
 
@@ -68,9 +68,9 @@ public:
         for (int i = 0; i < 4; i ++ ) {
             int a = x + dx[i];
             int b = y + dy[i];
-
-            if (a >= 0 && a < m && b >= 0 && b < n && grid[a][b] == '1') 
+            if (a >= 0 && a < m && b >= 0 && b < n && grid[a][b] == '1') {
                 dfs(a, b);
+            }
         }
     }
 
@@ -80,7 +80,6 @@ public:
         m = grid.size();
         n = grid[0].size();
 
-        int res = 0;
         for (int i = 0; i < m; i ++ ) {
             for (int j = 0; j < n; j ++ ) {
                 if (grid[i][j] == '1') {

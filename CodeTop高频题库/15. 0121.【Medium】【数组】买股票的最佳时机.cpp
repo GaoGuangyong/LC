@@ -43,24 +43,24 @@ public:
 };
 
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        int n = prices.size();
-        int maxv = prices[n - 1];
-
         int res = 0;
 
+        int n = prices.size();
+        int maxVal = prices[n - 1];
         for (int i = n - 2; i >= 0; i -- ) {
-            maxv = max(maxv, prices[i]);
-            if (prices[i] < maxv) {
-                res = max(res, maxv - prices[i]);
+            if (prices[i] > maxVal) {
+                maxVal = prices[i];
+            }
+            if (maxVal > prices[i]) {
+                res = max(res, maxVal - prices[i]);
             }
         }
 
         return res;
     }
 };
-
 

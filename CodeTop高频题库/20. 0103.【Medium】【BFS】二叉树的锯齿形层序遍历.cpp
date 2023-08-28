@@ -15,10 +15,12 @@
 class Solution {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        
+        if (root == nullptr) return {}; // 特判：如果树为空，则返回空的二维数组
+
         vector<vector<int>> res; // 结果数组
         queue<TreeNode*> q; // BFS 队列
-        // 特判：如果树为空，则返回空的二维数组
-        if (root == nullptr) return res;
+
         q.push(root); // 根节点入队
 
         int cnt = 0;
@@ -47,3 +49,42 @@ public:
         return res; // 返回最终结果
     }
 };
+
+
+// 二刷
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        if (root == nullptr) return {};
+
+        vector<vector<int>> res;
+
+        queue<TreeNode*> q;
+        q.push(root);
+
+        int level = 0;
+
+        while (q.size()) {
+            vector<int> path;
+            int len = q.size();
+
+            while (len--) {
+                auto t = q.front();
+                q.pop();
+                
+                path.push_back(t->val);
+                if (t->left != nullptr) q.push(t->left);
+                if (t->right != nullptr) q.push(t->right);
+            }
+
+            level ++ ;
+
+            if (level % 2 == 0) reverse(path.begin(), path.end()); 
+
+            res.push_back(path);
+        }
+
+        return res;
+    }
+};
+

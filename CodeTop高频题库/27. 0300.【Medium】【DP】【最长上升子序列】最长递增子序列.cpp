@@ -5,7 +5,7 @@
 // DP 相似题目：673、674
 
 // 状态表示
-// f[i] 表示以 nums[i] 结尾的最长上升子序列的长度
+// f[i] 表示以第 i 个数 nums[i] 结尾的最长上升子序列的长度（下标从 1 开始）
 
 // 初始化
 // 每个元素都至少可以单独成为子序列，长度至少为 1
@@ -26,7 +26,7 @@ public:
         int n = nums.size();
 
         // 定义状态数组
-        vector<int> f(n + 1);
+        vector<int> f(n + 1); // n + 1 即可
 
         // 初始化 + 状态转移
         // 对于每一个遍历的位置 i，都在其前面找一个 j
@@ -48,11 +48,11 @@ public:
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        int res = 0;
         int n = nums.size();
 
-        vector<int> f(n + 1);
+        vector<int> f(n);
 
+        int res = 0;
         for (int i = 0; i < n; i ++ ) {
             f[i] = 1;
             for (int j = 0; j < i; j ++ ) {
@@ -64,7 +64,6 @@ public:
         return res;
     }
 };
-
 
 // 写法二
 class Solution {

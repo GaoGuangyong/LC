@@ -47,13 +47,13 @@ public:
             if (list != nullptr) heap.push(list);
         }
 
-        // k 路归并
+        // k 路归并过程
         while (heap.size()) { // 当堆里有元素的时候
             auto t = heap.top(); // 取堆顶元素（值最小的节点）
-            heap.pop(); // 将其从堆中删掉
+            heap.pop();          // 将其从堆中删掉
 
-            tail->next = t; // 将当前节点插到尾节点的后面
-            tail = tail->next; // 尾节点向后移动一位
+            tail->next = t;      // 将当前节点插到尾节点的后面
+            tail = tail->next;   // 尾节点向后移动一位
 
             // 如果 t 所在的那个链表有下一个节点，则将下一个节点加入堆中
             if (t->next != nullptr) heap.push(t->next);
@@ -64,12 +64,11 @@ public:
 };
 
 
-// 无注释版本
-
+// 二刷
 class Solution {
 public:
     struct cmp {
-        bool operator() (ListNode* a, ListNode* b) {
+        bool operator()(ListNode* a, ListNode* b) {
             return a->val > b->val;
         }
     };

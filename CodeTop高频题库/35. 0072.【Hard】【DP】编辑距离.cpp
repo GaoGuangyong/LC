@@ -28,6 +28,7 @@
 // 同理，对于 word2 也有三种情况
 
 
+// 写法一：（不推荐）
 class Solution {
 public:
     int minDistance(string word1, string word2) {
@@ -83,11 +84,42 @@ public:
                 int op1 = f[i - 1][j] + 1; // 删
                 int op2 = f[i][j - 1] + 1; // 插
                 int op3 = f[i - 1][j - 1]; // 改
-                if (word1[i] != word2[j]) op3 ++ ;
+                if (word1[i] != word2[j]) op3 ++ ; // 只有不相等才需要修改，操作次数 + 1
                 
                 f[i][j] = min(min(op1, op2), op3); // 三种操作取最小
             }
         }
+        return f[m][n];
+    }
+};
+
+
+// 二刷
+class Solution {
+public:
+    int minDistance(string word1, string word2) {
+        int m = word1.size();
+        int n = word2.size();
+
+        word1 = " " + word1;
+        word2 = " " + word2;
+
+        vector<vector<int>> f(m + 1, vector<int>(n + 1, 0));
+
+        for (int i = 0; i < m + 1; i ++ ) f[i][0] = i;
+        for (int j = 0; j < n + 1; j ++ ) f[0][j] = j;
+
+        for (int i = 1; i < m + 1; i ++ ) {
+            for (int j = 1; j < n + 1; j ++ ) {
+                int op1 = f[i - 1][j] + 1;
+                int op2 = f[i][j - 1] + 1;
+                int op3 = f[i - 1][j - 1];
+                if (word1[i] != word2[j]) op3 ++ ;
+
+                f[i][j] = min(op1, min(op2, op3));
+            }
+        }
+
         return f[m][n];
     }
 };

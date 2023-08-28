@@ -38,12 +38,12 @@ public:
     }
 };
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
-    ListNode *detectCycle(ListNode* head) {
-        ListNode* slow = head;
-        ListNode* fast = head; 
+    ListNode *detectCycle(ListNode *head) {
+        auto slow = head;
+        auto fast = head;
 
         while (fast != nullptr && fast->next != nullptr) {
             slow = slow->next;
@@ -51,13 +51,14 @@ public:
             if (fast == slow) break;
         }
 
-        if (fast == nullptr || fast->next == nullptr) return NULL;
+        if (fast == nullptr || fast->next == nullptr) return {};
 
         fast = head;
-        while (fast != slow) { 
+
+        while (fast != slow) {
             slow = slow->next;
             fast = fast->next;
-        } 
+        }
 
         return fast;
     }

@@ -65,9 +65,9 @@ public:
 
 // 设置虚拟节点 dummy 指向 head
 // 设定双指针 p 和 q，初始都指向虚拟头节点 dummy
-// 移动 q，直到 p 与 q 之间相隔的元素个数为 n
-// 同时移动 p 与 q，直到 q 指向的为 nullptr
-// 将 p 的下一个节点指向下下个节点
+// 先将 q 移动 n + 1 步，使 p 和 q 之间的元素个数为 n
+// 再同时移动 p 与 q，直到 q 指向 nullptr，此时 p 指向的就是倒数第 n 个节点的前一个节点
+// 故将 p 的下一个节点指向下下个节点
 
 class Solution {
 public:
@@ -96,7 +96,7 @@ public:
 
 
 
-// 无注释版
+// 二刷
 class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {

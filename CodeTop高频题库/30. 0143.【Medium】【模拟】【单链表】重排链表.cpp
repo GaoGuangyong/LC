@@ -27,8 +27,6 @@
 class Solution {
 public:
     void reorderList(ListNode* head) {
-        // if (head == nullptr) return; // 特判空节点（本题不同特判）
-
         // 计算链表长度
         int n = 0;
         for (auto p = head; p != nullptr; p = p->next) n ++ ;

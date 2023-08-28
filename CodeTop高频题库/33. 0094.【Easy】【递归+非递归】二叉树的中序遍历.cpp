@@ -13,7 +13,7 @@
 
 // 给定一个二叉树的根节点 root ，返回 它的 中序 遍历
 
-// 解法一：非递归
+// 解法一：非递归（用栈实现）
 // 专门用来解决 树的遍历问题 的非递归写法
 // 只要当前节点非空，就将其压入栈，然后向左走，一直这样走，就会走到左下角
 // 此时，如果栈不空，就从栈顶弹出左下角的节点，加入结果数组，再向右走
@@ -28,16 +28,16 @@ public:
 
         stack<TreeNode*> stk;
 
-        // 当前节点非空 或 栈不空 时循环
-        while (root != nullptr || !stk.empty()) { 
+        while (root != nullptr || !stk.empty()) { // 当前节点非空 或 栈不空 时循环
+
             // 只要当前节点非空，就压入栈，并一路向左走，直到将左下角的节点压栈
             while (root != nullptr) { 
                 stk.push(root); // 将当前节点入栈
                 root = root->left; // 向左遍历
             }
 
-            // 此时，如果栈不空，就从栈顶弹出左下角的节点，加入结果数组，再向右走
-            if (stk.top() != nullptr) {
+            // 此时，如果栈不空，就用 root 指向栈顶节点（即左下角节点），然后从栈顶弹出左下角的节点，加入结果数组，再向右走
+            if (!stk.empty()) {
                 root = stk.top(); // 将 root 指向左下角节点
                 stk.pop(); // 将左下角节点从栈中弹出
                 res.push_back(root->val); // 将左下角节点的节点值加入结果数组
@@ -68,26 +68,26 @@ public:
 };
 
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
         vector<int> res;
-
         stack<TreeNode*> stk;
 
         while (root != nullptr || !stk.empty()) {
+            
             while (root != nullptr) {
                 stk.push(root);
-
                 root = root->left;
             }
 
-            if (stk.top() != nullptr) {
+            if (!stk.empty()) {
                 root = stk.top();
                 stk.pop();
+
                 res.push_back(root->val);
-                
+
                 root = root->right;
             }
         }

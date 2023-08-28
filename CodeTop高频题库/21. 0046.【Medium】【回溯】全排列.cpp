@@ -10,9 +10,9 @@
 // 不包含重复元素的 排列 问题
 class Solution {
 public:
-    vector<int> path; // 当前方案
-    vector<vector<int>> res; // 所有方案
-    vector<bool> visit; // 标记数组，visit[i] = true 表示被使用了
+    vector<int> path;
+    vector<vector<int>> res;
+    vector<bool> visit;
 
     // DFS 函数：从 nums 数组的下标 u 开始枚举每个位置填什么数
     void dfs(vector<int>& nums, int u) {
@@ -48,14 +48,14 @@ public:
 };
 
 
-// 无注释版本
+// 二刷
 class Solution {
 public:
     vector<int> path;
     vector<vector<int>> res;
     vector<bool> visit;
 
-    void dfs(vector<int> nums, int u) {
+    void dfs(vector<int>& nums, int u) {
         if (u == nums.size()) {
             res.push_back(path);
             return;
@@ -63,11 +63,13 @@ public:
 
         for (int i = 0; i < nums.size(); i ++ ) {
             if (visit[i] == false) {
-                visit[i] = true;
                 path.push_back(nums[i]);
+                visit[i] = true;
+                
                 dfs(nums, u + 1);
+
+                visit[i] = false;;
                 path.pop_back();
-                visit[i] = false;
             }
         }
     }
@@ -78,8 +80,6 @@ public:
         return res;
     }
 };
-
-
 
 // 扩展：LC 47 全排列 II 
 // 包含重复元素的 排列 问题 -> 需要 排序 + 减枝

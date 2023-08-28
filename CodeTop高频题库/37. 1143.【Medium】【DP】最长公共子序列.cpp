@@ -40,8 +40,8 @@ public:
         vector<vector<int>> f(m + 1, vector<int>(n + 1));
 
         // 状态转移
-        for (int i = 1; i <= m; i ++ ) {
-            for (int j = 1; j <= n; j ++ ) {
+        for (int i = 1; i < m + 1; i ++ ) {
+            for (int j = 1; j < n + 1; j ++ ) {
                 if (text1[i] == text2[j]) 
                     f[i][j] = f[i - 1][j - 1] + 1;
                 else 
@@ -98,18 +98,21 @@ public:
         int m = text1.size();
         int n = text2.size();
 
+        vector<vector<int>> f(m + 1, vector<int>(n + 1, 0));
+
         text1 = " " + text1;
         text2 = " " + text2;
 
-        vector<vector<int>> f(m + 1, vector<int>(n + 1)); // 默认为 0，可以省去初始化的步骤
-
-        for (int i = 1; i <= m; i ++ ) {
-            for (int j = 1; j <= n; j ++ ) {
-                if (text1[i] == text2[j]) f[i][j] = f[i - 1][j - 1] + 1;
-                else f[i][j] = max(f[i - 1][j], f[i][j - 1]);
+        for (int i = 1; i < m + 1; i ++ ) {
+            for (int j = 1; j < n + 1; j ++ ) {
+                if (text1[i] == text2[j]) 
+                    f[i][j] = f[i - 1][j - 1] + 1;
+                else
+                    f[i][j] = max(f[i - 1][j], f[i][j - 1]);
             }
         }
 
         return f[m][n];
     }
 };
+
