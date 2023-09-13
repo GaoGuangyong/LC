@@ -1,5 +1,25 @@
 
 
+// 题意：
+// 给定一些同学的信息（名字，成绩）序列，请你将他们的信息按照成绩从高到低或从低到高的排列，相同成绩按先录入排列在前的规则处理（即不改变顺序 -> 稳定排序）
+
+// 第一行输入要排序的人的个数 n
+// 第二行输入一个整数表示排序的方式（0 代表降序，1 代表升序）
+// 之后 n 行分别输入他们的名字和成绩，以一个空格隔开
+
+// 输入：
+// 3
+// 0
+// fang 90
+// yang 50
+// ning 70
+
+// 输出：
+// yang 50
+// ning 70
+// fang 90
+
+
 // 自定义排序
 // 根据题意，相同成绩按录入顺序排列（稳定排序）
 
@@ -9,7 +29,7 @@
 #include <algorithm>
 using namespace std;
 
-typedef pair<string, int> PSI;
+typedef pair<string, int> PSI;  // 小技巧 ！！！！！存俩俩空格分开的数据 -> pair
 
 // 降序
 static bool cmp_0(PSI a, PSI b) {
@@ -20,6 +40,7 @@ static bool cmp_0(PSI a, PSI b) {
 static bool cmp_1(PSI a, PSI b) {
     return a.second < b.second;
 }
+
 
 int main() {
     // 读入元素个数 及 排序方式
@@ -32,9 +53,7 @@ int main() {
     for (int i = 0; i < n; i ++ ) {
         string name;
         int grade;
-        cin >> name;
-        cin>> grade;
-
+        cin >> name >> grade;
         arr[i] = {name, grade};
     }
 

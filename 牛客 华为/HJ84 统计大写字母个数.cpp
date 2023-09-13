@@ -8,14 +8,14 @@ using namespace std;
  
 int main() {
     // 读入一行字符串
-    string str;
-    getline(cin, str);
+    string s;
+    getline(cin, s);
 
     int res = 0;
 
-    // 遍历字符串 str，用库函数检查是否是大写字母
-    for (int i = 0; i < str.size(); i ++ ) {
-        if (isupper(str[i]) != 0) res ++ ;
+    // 遍历字符串 s，用库函数检查是否是大写字母
+    for (int i = 0; i < s.size(); i ++ ) {
+        if (isupper(s[i])) res ++ ;
     }
 
     cout << res << endl;

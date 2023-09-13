@@ -1,5 +1,9 @@
 
 
+// 题意：
+// 输入一行字符，分别统计出包含英文字母、空格、数字和其它字符的个数
+
+
 // https://blog.csdn.net/m0_51033005/article/details/115707870
 
 // string 类的内置函数
@@ -26,9 +30,9 @@ int main() {
 
     // 遍历字符串 str
     for (int i = 0; i < str.size(); i ++ ) {
-        if (isdigit(str[i]) != 0) num_n ++ ;      // 数字
-        else if (isalpha(str[i]) != 0) num_e ++ ; // 英文字母
+        if (isalpha(str[i]) != 0) num_e ++ ;      // 英文字母
         else if (isspace(str[i]) != 0) num_w ++ ; // 空格
+        else if (isdigit(str[i]) != 0) num_n ++ ; // 数字
         else num_o ++ ;                           // 其他字符
     }
 
@@ -39,3 +43,25 @@ int main() {
 }
 
 
+
+// 二刷
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    string s;
+    getline(cin, s);
+
+    int a = 0, b = 0, c = 0, d = 0; // 字母、空格、数字、其他字符的数量
+
+    for (int i = 0; i < s.size(); i ++ ) {
+        if (isalpha(s[i])) a ++ ;
+        else if (isspace(s[i])) b ++ ;
+        else if (isdigit(s[i])) c ++ ;
+        else d ++ ;
+    }
+
+    cout << a << endl << b << endl << c << endl << d << endl;
+
+    return 0;
+}

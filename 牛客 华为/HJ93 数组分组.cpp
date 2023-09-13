@@ -10,7 +10,7 @@ using namespace std;
 // 参数 dif 表示 g5 - g3 的值
 // 加入 g5 时 dif += nums[i]
 // 加入 g3 时 dif -= nums[i]
-void backtrack(vector<int>& nums, int dif, vector<int>& res) {
+void dfs(vector<int>& nums, int dif, vector<int>& res) {
     // 退出条件：nums 为空
     if (nums.empty()) {
         res.push_back(dif);
@@ -23,10 +23,8 @@ void backtrack(vector<int>& nums, int dif, vector<int>& res) {
         int temp = nums[nums.size() - 1];
         nums.pop_back();
 
-        if (i == 0)
-            backtrack(nums, dif + temp, res);
-        else
-            backtrack(nums, dif - temp, res);
+        if (i == 0) dfs(nums, dif + temp, res);
+        else dfs(nums, dif - temp, res);
 
         // 撤销选择
         nums.push_back(temp);
@@ -37,11 +35,13 @@ int main() {
     int n;
     while (cin >> n) { // 注意 while 处理多个 case
         vector<int> nums(n);
-        for (int i = 0; i < n; i++)
-            cin >> nums[i];
+        for (int i = 0; i < n; i ++ ) cin >> nums[i];
+
         int g5sum=0;
         int g3sum=0;
+
         vector<int> waiting;
+
         for (int x: nums) {
             if (x % 5 == 0)
                 g5sum += x;
@@ -50,16 +50,18 @@ int main() {
             else
                 waiting.push_back(x);
         }
+
         vector<int> res;
-        backtrack(waiting, g5sum - g3sum, res);
+
+        dfs(waiting, g5sum - g3sum, res);
+
         bool flag = false;
-        for (int x: res)
-            if (x == 0)
-                flag = true;
-        if (flag == true)
-            cout << "true" << endl;
-        else
-            cout << "false" << endl;
+        for (int x: res) {
+            if (x == 0) flag = true;
+        }
+
+        if (flag == true) cout << "true" << endl;
+        else cout << "false" << endl;
     }
 }
 

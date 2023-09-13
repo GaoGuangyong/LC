@@ -1,14 +1,26 @@
 
 
+// 题意：
+// 输入一个单向链表和一个节点的值，从单向链表中删除等于该值的节点，删除后如果链表中无节点则返回空指针
+// 链表的值不能重复
+
 // 输入：6 2 1 2 3 2 5 1 4 5 7 2 2
+// 第一个参数 6 表示输入总共 6 个节点
+// 第二个参数 2 表示头节点值为 2
+// 剩下的 2 个一组表示第 2 个节点值后面插入第 1 个节点值，[1 2] 表示 2 后面插入 1
+// 最后一个参数为 2，表示要删掉值为 2 的节点
+
 //  6 2 [1 2] [3 2] [5 1] [4 5] [7 2] 2 
-//       1     3     5     4     7   是要加入的节点
+//    2                                  是头节点
+//       1     3     5     4     7       是要加入的节点
+//         2     2     1     5     2     是其前驱节点
+//                                    2  是要删除的节点
 
 // 共 6 个节点，头节点是 2，要删除的节点是 2
 // 链表：2 7 3 1 5 4
 // 删除：7 3 1 5 4
 
-// 解法一：单链表
+// 解法一：单链表（推荐，可以学习到单链表的各种操作）
 #include <iostream>
 using namespace std;
 
@@ -20,19 +32,21 @@ struct ListNode {
 };
 
 int main() {
-    // 读入节点数 n，头节点值 x 
+    // 读入节点数 n，头节点的值 x 
     int n, x;
     cin >> n >> x;
+
     // 创建头节点
     ListNode* head = new ListNode(x); 
+
     // 实现剩余 n - 1 个节点
     for (int i = 0; i < n - 1; i ++ ) {
-        // 读入当前创建的节点 cur 及其前驱节点 pre
+        // 读入当前创建的节点的值 cur 及其前驱节点的值 pre
         int cur, pre;
         cin >> cur >> pre;
-        ListNode* p = new ListNode(cur); // 创建节点 p，指向当前创建的节点
+        ListNode* p = new ListNode(cur); // 创建节点 p，指向新创建的节点
         
-        // 从头节点向后遍历，找到前驱节点 pre
+        // 用 q 从头节点向后遍历，直到指向了前驱节点 pre
         ListNode* q = head;
         while (q->val != pre) q = q->next;
         
@@ -51,6 +65,47 @@ int main() {
             cout << p->val << " ";
     }
     
+    return 0;
+}
+
+
+// 二刷
+#include <bits/stdc++.h>
+using namespace std;
+
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode(int x): val(x), next(nullptr) {}
+};
+
+int main() {
+    int n, x;
+    cin >> n >> x;
+
+    ListNode* head = new ListNode(x);
+
+    for (int i = 0; i < n - 1; i ++ ) {
+        int cur, pre;
+        cin >> cur >> pre;
+
+        ListNode* p = new ListNode(cur);
+
+        ListNode* q = head;
+        while (q->val != pre) q = q->next;
+
+        p->next = q->next;
+        q->next = p;        
+    }
+    
+    int remove;
+    cin >> remove;
+    
+    for (ListNode* p = head; p != nullptr; p = p->next ) {
+        if (p->val != remove) 
+            cout << p->val << " ";
+    }
+
     return 0;
 }
 

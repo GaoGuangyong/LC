@@ -1,5 +1,8 @@
 
 
+// 题意：
+// 输入一个字符串和一个整数 k ，截取字符串的前k个字符并输出
+
 // 库函数 substr()
 
 #include <iostream>
@@ -7,12 +10,13 @@
 using namespace std;
 
 int main() {
-    string str;
-    cin >> str;
+    string s;
+    cin >> s;
+
     int k;
     cin >> k;
 
-    cout << str.substr(0, k) << endl;
+    cout << s.substr(0, k) << endl;
 
     return 0;
 }

@@ -1,4 +1,13 @@
 
+// 题意：
+// 将一个字符串的内容颠倒过来，并输出
+
+// 输入：
+// I am a student
+
+// 输出：
+// tneduts a ma I
+
 
 
 #include <iostream>
@@ -22,4 +31,6 @@ int main(){
     
     return 0;
 }
+
+
 

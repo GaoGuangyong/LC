@@ -55,7 +55,7 @@ int main() {
         else if (flag == true) {
             // 当前运算符的优先级 <= 栈顶运算符的优先级，就把栈顶的先计算一下
             while (op.size() && pr[s[i]] <= pr[op.top()])
-                compute(); 
+                compute();
             op.push(s[i]); // 计算完成后将当前运算符加入运算符栈
             flag = false;
         } 

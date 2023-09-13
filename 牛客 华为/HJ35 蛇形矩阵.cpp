@@ -16,7 +16,7 @@ int main() {
     int n;
     cin >> n;
     
-    // 1、维护 matrix 数组
+    // 1、创建并维护 matrix 数组
     vector<vector<int>> matrix(N, vector<int>(N));
     int num = 1;
 
@@ -24,14 +24,14 @@ int main() {
     for (int i = 0; i < n; i ++ ) {
         // 枚举列下标
         for (int j = 0; j <= i; j ++ ) {
-            matrix[i - j][j] = num; // 核心代码：行下标 = 下标总和 i - 列下标 j
+            matrix[i - j][j] = num; // 核心代码：行下标 = 下标总和 i - 列下标 j，列下标从 0 到 i
             num ++ ;
         }
     }
 
     // 2、遍历 matrix 数组，按要求输出
     for (int i = 0; i < n; i ++ ) {
-        for (int j = 0; j < n - i; j ++ ) { // 核心代码：j < n - i
+        for (int j = 0; j < n - i; j ++ ) { // 核心代码：j 从 0 到 n - i
             cout << matrix[i][j] << " ";
         }
         cout << endl;

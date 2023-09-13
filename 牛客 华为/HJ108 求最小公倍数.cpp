@@ -13,6 +13,7 @@ int main() {
     // 读入 a, b
     int a, b;
     cin >> a >> b;
+    
     // 最小公倍数 = 两数乘积 / 最大公约数
     cout << a * b / gcd(a, b) << endl; 
     

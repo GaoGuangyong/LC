@@ -1,29 +1,56 @@
 
 
-// 题意：枚举 1 ~ 7，输出和 7 有关的树的个数
+// 题意：
+// 输出 1 ~ n 之间的和 7 有关的数字的个数
+// 和 7 有关：7 的倍数，或者是包含 7 的数字
 
 
-// 解法一：
-#include<iostream>
-#include<string>
+// 解法一：  ！！！ 技巧：将数字转换成字符串，利用 find() 函数查找 7
+#include <iostream>
+#include <string>
 using namespace std;
  
 int main() {
     int n;
     cin >> n;
+
     int res = 0;
 
-    // 枚举 7 到 n，如果能整除 7 或者转化成字符串后能找到字符 7，则 res ++ 
-    for (int i = 7; i <= n; i ++ )
-        if (i % 7 == 0 || to_string(i).find('7', 0) != -1) 
-            res ++ ;
+    // 枚举 7 到 n，如果能整除 7 或者转化成字符串后能找到字符 7，则 res ++
+    for (int i = 7; i <= n; i ++ ) {
+        if (i % 7 == 0 || to_string(i).find('7', 0) != -1) res ++ ;
+    }
+
     cout << res << endl;
     
     return 0;
-}
+} 
+
+
+// 二刷：
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    int res = 0;
+
+    for (int i = 7; i <= n; i ++ ) {
+        if (i % 7 == 0 || to_string(i).find('7') != -1) res ++ ;
+    }
+
+    cout << res << endl;
+    
+    return 0;
+} 
+
+
+
 
 // 解法二：
-#include<iostream>
+#include <iostream>
 using namespace std;
  
 bool select7(int i) {
@@ -37,6 +64,7 @@ bool select7(int i) {
         // 丢弃个位
         i /= 10;
     }
+
     return false;
 }
 
